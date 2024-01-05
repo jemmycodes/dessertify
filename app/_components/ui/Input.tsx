@@ -1,10 +1,15 @@
-interface Props {
-  id: string;
+import { ComponentPropsWithRef } from "react";
+import { CreateUser } from "@/app/auth/signup/page";
+import { Path, UseFormRegister } from "react-hook-form";
+
+interface Props extends ComponentPropsWithRef<"input"> {
+  id: Path<CreateUser>,
   icon: React.ReactNode;
   label?: string;
   className: string;
   placeholder: string;
-  errorMessage: string;
+  register: UseFormRegister<CreateUser> 
+  errorMessage: string | undefined;
   type: "text" | "checkbox" | "password" | "email";
 }
 
@@ -12,6 +17,7 @@ const Input = ({
   type,
   className,
   label,
+  register,
   id,
   errorMessage,
   placeholder,
@@ -24,12 +30,13 @@ const Input = ({
         type={type}
         className={className}
         id={id}
+        {...register(id)}
         placeholder={placeholder}
       />
       {icon}
-      <p>{errorMessage}</p>
+      <p className="text-xs text-red-700 font-medium ">{errorMessage}</p>
     </div>
   );
 };
 
-export default Input;
+export default Input
