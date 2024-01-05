@@ -1,10 +1,15 @@
-import React from 'react'
-import AuthenticationLayout from '../layout'
+import React from "react";
+import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
 
 const Login = () => {
   return (
-    <AuthenticationLayout>Login</AuthenticationLayout>
-  )
-}
+    <AuthFormWrapper
+      btnText="Signup"
+      heading="Create an Account"
+      >
+      <></>
+    </AuthFormWrapper>
+  );
+};
 
-export default Login
+export default Login;

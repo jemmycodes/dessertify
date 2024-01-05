@@ -8,8 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+    
       colors: {
      "orange": "#ed7c12",
+      }, gridTemplateColumns: {
+       "main-layout": "60px 1fr"
      }
     },
   },

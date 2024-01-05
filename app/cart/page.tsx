@@ -1,8 +1,6 @@
-
+import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 const Cart = () => {
-  return (
-    <div>Cart</div>
-  )
-}
+  return <PagesWrapper>Cart</PagesWrapper>;
+};
 
-export default Cart
+export default Cart;

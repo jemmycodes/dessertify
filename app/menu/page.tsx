@@ -1,5 +1,7 @@
+import PagesWrapper from "../_components/customlayouts/PagesWrapper";
+
 const Menu = () => {
-  return <div>Menu</div>;
+  return <PagesWrapper>Menu</PagesWrapper>;
 };
 
 export default Menu;

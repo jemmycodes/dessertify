@@ -1,5 +1,6 @@
+import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 const Profile = () => {
-  return <div>Profile</div>;
+  return <PagesWrapper>Profile</PagesWrapper>;
 };
 
 export default Profile;
