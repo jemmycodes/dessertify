@@ -9,7 +9,7 @@ interface Props {
 
 const AuthFormWrapper = ({ children, heading, btnText, extraText }: Props) => {
   return (
-    <section className="p-6 bg-white rounded-xl flex justify-center items-center flex-col gap-2  w-[90%] max-w-[350px] ">
+    <section className="p-6 bg-white rounded-xl flex justify-center items-center flex-col gap-2   w-[90%] max-w-[350px] ">
       <hgroup className="flex flex-col ">
         <h1 className="text-center font-bold text-2xl after:block after:p-[.15rem] after:w-5 after:mx-auto  after:mt-2 after:rounded-full after:bg-orange ">
           {heading}
