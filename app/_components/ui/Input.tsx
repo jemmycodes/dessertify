@@ -1,42 +1,32 @@
-import { ComponentPropsWithRef } from "react";
-import { CreateUser } from "@/app/auth/signup/page";
-import { Path, UseFormRegister } from "react-hook-form";
+// import { ComponentPropsWithRef } from "react";
+// import { CreateUser } from "@/app/auth/signup/page";
+// import { Path, UseFormRegister } from "react-hook-form";
 
-interface Props extends ComponentPropsWithRef<"input"> {
-  id: Path<CreateUser>,
+import { InputHTMLAttributes, forwardRef } from "react";
+import { UseFormRegister } from "react-hook-form";
+
+type TInputProps = InputProps & InputHTMLAttributes<HTMLInputElement>;
+
+type InputProps = {
   icon: React.ReactNode;
-  label?: string;
-  className: string;
-  placeholder: string;
-  register: UseFormRegister<CreateUser> 
   errorMessage: string | undefined;
-  type: "text" | "checkbox" | "password" | "email";
+  label?: string
 }
 
-const Input = ({
-  type,
-  className,
-  label,
-  register,
-  id,
-  errorMessage,
-  placeholder,
-  icon,
-}: Props) => {
-  return (
+const Input = forwardRef<HTMLInputElement, TInputProps>(({ errorMessage, icon, label,...props }, ref) => {
+    return (
     <div className="flex flex-col gap-1 relative">
       {label && <label>{label}</label>}
       <input
-        type={type}
-        className={className}
-        id={id}
-        {...register(id)}
-        placeholder={placeholder}
+       ref={ref}
+      {...props}
       />
       {icon}
       <p className="text-xs text-red-700 font-medium ">{errorMessage}</p>
     </div>
-  );
-};
+  )
+})
 
-export default Input
+Input.displayName = 'Input';
+
+export default Input;

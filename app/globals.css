@@ -15,6 +15,10 @@
     @apply border-b border-gray-400 w-full text-sm py-2 focus:outline-none focus:border-b focus:border-gray-600 font-medium;
   }
 
+  .auth-input-error {
+    @apply border-b-2 border-red-600 w-full text-sm py-2 focus:outline-none focus:border-b-2 focus:border-red-600 font-medium;
+  }
+
   .auth-icons {
     @apply absolute right-0 top-1/2 -translate-y-[55%] text-gray-400 text-lg
   }

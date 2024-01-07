@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const notoSans = Noto_Sans({
+const manrope = Manrope({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={notoSans.className}>{children}</body>
+      <body className={manrope.className}>{children}</body>
     </html>
   );
 }
