@@ -3,38 +3,77 @@
 import { z } from "zod";
 import React from "react";
 import Link from "next/link";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import email from "@/public/email.svg";
 import { FcGoogle } from "react-icons/fc";
 import { FaRegUser } from "react-icons/fa";
 import Input from "@/app/_components/ui/Input";
 import { MdOutlineMail } from "react-icons/md";
+import Dialog from "@/app/_components/ui/Dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { createAccountSchema } from "@/app/_lib/utils/schema";
+import { signupWithEmail } from "@/app/_lib/helpers/supabase";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
 
 export type CreateUser = z.infer<typeof createAccountSchema>;
 
 const Signup = () => {
-  const onSubmit: SubmitHandler<CreateUser> = (fields) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
+    toast.loading("Loading..");
     console.log(fields);
+    const res = await signupWithEmail(fields);
+
+    if (res) {
+      setShowModal(true);
+    }
+
+    // reset();
+    toast.dismiss();
   };
 
   const {
     handleSubmit,
+    getValues,
     register,
     formState: { errors },
+    reset,
   } = useForm<CreateUser>({ resolver: zodResolver(createAccountSchema) });
 
   return (
     <AuthFormWrapper heading="Create an Account">
+      {showModal && (
+        <Dialog
+          heading="Verify your Account"
+          text={
+            <p>
+              We have sent you a mail at{" "}
+              <span className="font-semibold text-orange underline">
+                {getValues("email")}
+              </span>
+              . Follow the instructions in the mail to verify your account.
+            </p>
+          }
+          image={email}
+          handleModal={() => setShowModal((prev) => !prev)}
+        />
+      )}
       <Input
         type="text"
         id="firstname"
+        autoFocus={true}
         placeholder="Firstname"
         {...register("firstname")}
         icon={<FaRegUser className="auth-icons" />}
         errorMessage={errors.firstname && errors.firstname.message}
-        className={errors.firstname ? "auth-input-error" : "auth-input"}
+        className={
+          errors.firstname
+            ? "auth-input-error capitalize"
+            : "auth-input capitalize"
+        }
       />
       <Input
         type="text"
@@ -43,7 +82,11 @@ const Signup = () => {
         {...register("lastname")}
         icon={<FaRegUser className="auth-icons" />}
         errorMessage={errors.lastname && errors.lastname.message}
-        className={errors.lastname ? "auth-input-error" : "auth-input"}
+        className={
+          errors.lastname
+            ? "auth-input-error  capitalize"
+            : "auth-input capitalize"
+        }
       />
       <Input
         id="email"

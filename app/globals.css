@@ -20,6 +20,23 @@
   }
 
   .auth-icons {
-    @apply absolute right-0 top-1/2 -translate-y-[55%] text-gray-400 text-lg
+    @apply absolute right-0 top-1/2 -translate-y-[55%] text-gray-400 text-lg;
+  }
+
+  .menu-nav {
+    @apply flex gap-3 py-4 overflow-x-scroll scrollbar-hide ;
+  }
+
+  .menu-nav li a {
+    @apply w-fit    px-5 py-2 rounded-full text-sm flex gap-1 items-center whitespace-nowrap
+  }
+
+  .active {
+    @apply bg-orange text-white;
+  }
+
+  .not-active {
+    @apply border border-gray-500
   }
 }
+

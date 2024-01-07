@@ -6,7 +6,7 @@ interface Props {
 
 const PagesWrapper = ({ children }: Props) => {
   return (
-    <main className="w-full bg-orange/10 min-h-screen md:grid-cols-main-layout">
+    <main className="w-full bg-orange/10 min-h-screen md:grid-cols-main-layout p-4">
       <Navbar />
       {children}
     </main>

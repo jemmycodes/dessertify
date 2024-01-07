@@ -1,6 +1,6 @@
 import Image from "next/image";
-import dessertBg from "../../public/dessert-bg.jpeg"
-
+import { Toaster } from "react-hot-toast";
+import dessertBg from "../../public/dessert-bg.jpeg";
 
 interface Props {
   children: React.ReactNode;
@@ -8,10 +8,17 @@ interface Props {
 
 const AuthenticationLayout = ({ children }: Props) => {
   return (
-    <main className=" w-screen h-screen bg-auth-page-bg flex justify-center items-center">
-      <Image src={dessertBg} alt="An image showing different desserts" className="fixed w-screen h-screen -z-10 object-cover brightness-50"/>
-   {children}
-    </main>
+    <>
+      <Toaster />
+      <main className=" w-screen h-screen bg-auth-page-bg flex justify-center items-center">
+        <Image
+          src={dessertBg}
+          alt="An image showing different desserts"
+          className="fixed w-screen h-screen -z-10 object-cover brightness-50"
+        />
+        {children}
+      </main>
+    </>
   );
 };
 
