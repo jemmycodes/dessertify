@@ -24,11 +24,11 @@
   }
 
   .menu-nav {
-    @apply flex gap-3 py-4 overflow-x-scroll scrollbar-hide ;
+    @apply flex gap-3 py-4 overflow-x-scroll scrollbar-hide;
   }
 
   .menu-nav li a {
-    @apply w-fit    px-5 py-2 rounded-full text-sm flex gap-1 items-center whitespace-nowrap
+    @apply w-fit px-5 py-2 rounded-full text-sm flex gap-1 items-center whitespace-nowrap hover:scale-110 duration-500 transition-all;
   }
 
   .active {
@@ -36,7 +36,6 @@
   }
 
   .not-active {
-    @apply border border-gray-500
+    @apply border border-gray-400;
   }
 }
-

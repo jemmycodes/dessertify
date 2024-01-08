@@ -1,22 +1,31 @@
 "use client";
 
-import React from "react";
 import { z } from "zod";
-import { FcGoogle } from "react-icons/fc";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/app/_lib/utils/schema";
+import React from "react";
 import Link from "next/link";
+import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { useRouter } from "next/navigation";
 import { MdOutlineMail } from "react-icons/md";
 import Input from "@/app/_components/ui/Input";
+import { loginSchema } from "@/app/_lib/utils/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { loginWithEmail } from "@/app/_lib/helpers/supabase";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
-import { error } from "console";
 
 export type LoginUser = z.infer<typeof loginSchema>;
 
 const Login = () => {
-  const onSubmit: SubmitHandler<LoginUser> = (fields) => {
-    console.log(fields);
+  const router = useRouter();
+
+  const onSubmit: SubmitHandler<LoginUser> = async (fields) => {
+    const toastID = toast.loading("Logging you in...");
+
+    const res = await loginWithEmail(fields);
+ res && router.push("/menu");
+
+    toast.dismiss(toastID);
   };
 
   const {

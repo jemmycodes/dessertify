@@ -22,19 +22,6 @@ export type CreateUser = z.infer<typeof createAccountSchema>;
 const Signup = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
-    toast.loading("Loading..");
-    console.log(fields);
-    const res = await signupWithEmail(fields);
-
-    if (res) {
-      setShowModal(true);
-    }
-
-    // reset();
-    toast.dismiss();
-  };
-
   const {
     handleSubmit,
     getValues,
@@ -43,6 +30,16 @@ const Signup = () => {
     reset,
   } = useForm<CreateUser>({ resolver: zodResolver(createAccountSchema) });
 
+  const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
+    const toastID = toast.loading("Creating your account...");
+    console.log(fields);
+    const res = await signupWithEmail(fields);
+
+    res && setShowModal(true);
+
+    toast.dismiss(toastID);
+  };
+
   return (
     <AuthFormWrapper heading="Create an Account">
       {showModal && (
@@ -50,7 +47,7 @@ const Signup = () => {
           heading="Verify your Account"
           text={
             <p>
-              We have sent you a mail at{" "}
+              We have sent you a mail at
               <span className="font-semibold text-orange underline">
                 {getValues("email")}
               </span>
