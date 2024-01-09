@@ -11,22 +11,26 @@ const getData = async (slug: string) => {
   return await res.json();
 };
 
-const MenuItems = async ({ params: { slug } }: { slug: string }) => {
+const MenuItems = async ({
+  params: { slug },
+}: {
+  params: { slug: string };
+}) => {
   const query =
     slug === "desserts"
       ? "desserts?limit=120"
       : `desserts?category=${slug}&limit=120`;
 
-    const { data: menuItems } = await getData(query);
-    
+  const { data: menuItems } = await getData(query);
+
   return (
-    <div>
+    <ul className="grid grid-cols-menu-cards-layout gap-3 my-5">
       <Suspense fallback={<p>Loading Data...</p>}>
         {menuItems.map((item: MenuTypes) => (
           <MenuCard {...item} key={item._id} />
         ))}
       </Suspense>
-    </div>
+    </ul>
   );
 };
 

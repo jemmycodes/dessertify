@@ -1,10 +1,9 @@
 
-interface Props {
-  children: React.ReactNode;
+interface FormWrapperProps extends Props {
   heading: string;
 }
 
-const AuthFormWrapper = ({ children, heading }: Props) => {
+const AuthFormWrapper = ({ children, heading }: FormWrapperProps) => {
   return (
     <section className="p-6 bg-white rounded-xl flex justify-center items-center flex-col gap-2 overflow-y-scroll   w-[90%] max-w-[350px] ">
       <hgroup className="flex flex-col ">

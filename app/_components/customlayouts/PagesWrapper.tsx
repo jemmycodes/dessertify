@@ -1,8 +1,5 @@
 import Navbar from "./navbar";
 
-interface Props {
-  children: React.ReactNode;
-}
 
 const PagesWrapper = ({ children }: Props) => {
   return (

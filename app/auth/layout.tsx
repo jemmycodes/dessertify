@@ -2,10 +2,6 @@ import Image from "next/image";
 import { Toaster } from "react-hot-toast";
 import dessertBg from "../../public/dessert-bg.jpeg";
 
-interface Props {
-  children: React.ReactNode;
-}
-
 const AuthenticationLayout = ({ children }: Props) => {
   return (
     <>

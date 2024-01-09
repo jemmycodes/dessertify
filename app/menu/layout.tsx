@@ -5,10 +5,6 @@ import Input from "@/app/_components/ui/Input";
 import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 import MenuNavigation from "../_components/customlayouts/MenuNavigation";
 
-interface Props {
-  children: React.ReactNode;
-}
-
 const Menu = ({children}: Props) => {
   return (
     <PagesWrapper>

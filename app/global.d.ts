@@ -1,4 +1,3 @@
-declare global {
   type MenuTypes = {
     _id: string;
     name: string;
@@ -6,4 +5,7 @@ declare global {
     photoUrl: string;
     description: string;
   };
-}
+
+type Props = {
+      children: React.ReactNode;
+  }
