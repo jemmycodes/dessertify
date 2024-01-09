@@ -8,7 +8,7 @@ const MenuCard = ({
   category,
 }: MenuTypes) => {
   return (
-    <li className="px-6 py-4 bg-white rounded-md flex gap-4  justify-between">
+    <li className="  px-6 py-4 bg-white rounded-md flex gap-4  justify-between">
       <img
         src={photoUrl}
         loading="lazy"

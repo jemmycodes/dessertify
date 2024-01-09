@@ -26,7 +26,7 @@ const MenuItems = async ({
   return (
     <ul className="grid grid-cols-menu-cards-layout gap-3 my-5">
       <Suspense fallback={<p>Loading Data...</p>}>
-        {menuItems.map((item: MenuTypes) => (
+        {menuItems.map((item: MenuTypes  ) => (
           <MenuCard {...item} key={item._id} />
         ))}
       </Suspense>
