@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
-import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();

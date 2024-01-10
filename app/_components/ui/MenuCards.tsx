@@ -1,4 +1,7 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { useMenuStore } from "@/app/_store/useMenu";
 
 const MenuCard = ({
   name,
@@ -6,13 +9,20 @@ const MenuCard = ({
   photoUrl,
   _id,
   category,
+  slug,
 }: MenuTypes) => {
+  const setMenu = useMenuStore(({ setMenu }) => setMenu);
   return (
-    <li className="  px-6 py-4 bg-white rounded-md flex gap-4  justify-between">
+    <Link
+      className="  px-6 py-4 bg-white rounded-md flex gap-4  justify-between"
+      href={`${slug}/dessert/${_id}`}
+      onClick={() => setMenu({ name, description, photoUrl, category })}>
       <img
         src={photoUrl}
         loading="lazy"
         alt={`Image of  a ${name}`}
+        width={70}
+        height={75}
         className="object-cover max-w-[6rem] h-36 rounded-md"
       />
       <div className="flex flex-col justify-between  ">
@@ -22,7 +32,7 @@ const MenuCard = ({
           Add to Cart
         </button>
       </div>
-    </li>
+    </Link>
   );
 };
 

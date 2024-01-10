@@ -1,9 +1,8 @@
 import Navbar from "./navbar";
 
-
 const PagesWrapper = ({ children }: Props) => {
   return (
-    <main className="w-full bg-orange/10 min-h-screen md:grid-cols-main-layout p-4">
+    <main className="w-full bg-orange/10 md:grid md:grid-cols-main-layout p-4 md:p-0 min-h-screen">
       <Navbar />
       {children}
     </main>
