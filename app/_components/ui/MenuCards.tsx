@@ -1,7 +1,5 @@
-"use client";
 
 import Link from "next/link";
-import { useMenuStore } from "@/app/_store/useMenu";
 
 const MenuCard = ({
   name,
@@ -11,12 +9,10 @@ const MenuCard = ({
   category,
   slug,
 }: MenuTypes) => {
-  const setMenu = useMenuStore(({ setMenu }) => setMenu);
   return (
     <Link
       className="  px-6 py-4 bg-white rounded-md flex gap-4  justify-between"
-      href={`${slug}/dessert/${_id}`}
-      onClick={() => setMenu({ name, description, photoUrl, category })}>
+      href={`${slug}/dessert/${_id}`}>
       <img
         src={photoUrl}
         loading="lazy"

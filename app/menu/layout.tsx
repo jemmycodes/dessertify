@@ -1,22 +1,21 @@
 "use client";
 
-import { MdSearch } from "react-icons/md";
+
 import Input from "@/app/_components/ui/Input";
 import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 import MenuNavigation from "../_components/customlayouts/MenuNavigation";
 
-const Menu = ({ children }: Props) => {
+const MenuLayout = ({ children }: Props) => {
   return (
     <PagesWrapper>
-      <div className="p-5">
-        <MenuNavigation />
+      <div>
 
-
-      
-        {children}
+      <MenuNavigation />
+     
+      <div className="p-5">{children}</div>
       </div>
     </PagesWrapper>
   );
 };
 
-export default Menu;
+export default MenuLayout;

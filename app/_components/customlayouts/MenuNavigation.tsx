@@ -16,15 +16,15 @@ const MenuNavigation = () => {
       <ul className="menu-nav">
         <li>
           <Link
-            href="desserts"
-            className={pathname === "/menu/desserts" ? "active" : "not-active"}>
+            href="/menu"
+            className={pathname === "/menu" ? "active" : "not-active"}>
             <Image src={dessert} alt="donut" width={20} height={20} />
             <p>Desserts</p>
           </Link>
         </li>
         <li>
           <Link
-            href="Donut"
+            href="/menu/Donut"
             className={pathname === "/menu/Donut" ? "active" : "not-active"}>
             <Image src={donut} alt="donut" width={20} height={20} />
             <p>Donuts</p>
@@ -32,7 +32,7 @@ const MenuNavigation = () => {
         </li>
         <li>
           <Link
-            href="Cookie"
+            href="/menu/Cookie"
             className={pathname === "/menu/Cookie" ? "active" : "not-active"}>
             <Image src={cookies} alt="donut" width={20} height={20} />
             <p>Cookie</p>
@@ -40,7 +40,7 @@ const MenuNavigation = () => {
         </li>
         <li>
           <Link
-            href="Ice_Cream"
+            href="/menu/Ice_Cream"
             className={
               pathname === "/menu/Ice_Cream" ? "active" : "not-active"
             }>
