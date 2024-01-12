@@ -1,17 +1,13 @@
 import { Suspense } from "react";
-import { MdSearch } from "react-icons/md";
-import Input from "@/app/_components/ui/Input";
 import MenuCard from "@/app/_components/ui/MenuCards";
 import { supabaseClient } from "@/app/_lib/helpers/supabase";
 
 const MenuItems = async ({ params: { slug } }: Params) => {
-  const { data: menu, error } = await supabaseClient
+  let { data: menu, error } = await supabaseClient
     .from("menu")
     .select("*")
-    .eq("category", slug);
-  console.log(menu);
 
-  if (error) {
+  if (error || !menu) {
     return <p>An error occurred</p>;
   }
 
@@ -19,9 +15,11 @@ const MenuItems = async ({ params: { slug } }: Params) => {
     <>
       <section className="grid grid-cols-menu-cards-layout gap-3 my-5">
         <Suspense fallback={<p>Loading Data...</p>}>
-          {menu.map((item: MenuTypes) => (
-            <MenuCard {...item} key={item._id} slug={slug} />
-          ))}
+          {slug === "desserts"
+            ? menu.map((item) => <MenuCard {...item} key={item._id} />)
+            : menu
+                .filter((item) => item.category === slug)
+                .map((item) => <MenuCard {...item} key={item._id} />)}
         </Suspense>
       </section>
     </>

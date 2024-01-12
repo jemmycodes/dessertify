@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { signOut } from "@/app/_lib/helpers/supabase";
 
 const Navbar = () => {
+  const router = useRouter()
   const pathname = usePathname();
 
   return (
@@ -38,15 +40,23 @@ const Navbar = () => {
           <Link
             className={pathname === "/auth/signup" ? "active-link" : "nav-link"}
             href="/auth/signup">
-            <IoMdLogOut />
+            <IoMdLogIn />
           </Link>
         </li>
         <li>
-          <Link
-            className={pathname === "/auth/login" ? "active-link" : "nav-link"}
-            href="/auth/login">
-            <IoMdLogIn />
-          </Link>
+          <button
+            className="nav-link"
+            onClick={async (e) => {
+              e.preventDefault();
+              const error = await signOut();
+              console.log(error);
+              if (!error) {
+                console.log(error);
+              router.replace("/auth/login")
+              }
+            }}>
+            <IoMdLogOut />
+          </button>
         </li>
       </ul>
     </nav>

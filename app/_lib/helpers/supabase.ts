@@ -1,45 +1,54 @@
 import { LoginUser } from "@/app/auth/login/page";
 import { CreateUser } from "@/app/auth/signup/page";
-import { createBrowserClient } from "@supabase/ssr";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 
-export const supabaseClient = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+export const supabaseClient = createClientComponentClient();
 
 export const signupWithEmail = async (fields: CreateUser) => {
+  const { email, password, firstname, lastname } = fields;
+
   const { data, error } = await supabaseClient.auth.signUp({
-    email: fields.email,
-    password: fields.password,
+    email,
+    password,
     options: {
-      data: {
-        email: fields.email,
-        firstname: fields.firstname,
-        lastname: fields.lastname,
-      },
+      emailRedirectTo: `${location.origin}/auth/callback`,
+      data: { email, firstname, lastname },
     },
   });
 
   if (error) {
     toast.error(error.message);
-    console.log(error)
+    console.log(error);
     return;
   }
 
-  return data
+  return data;
 };
 
-export const loginWithEmail = async ({email, password}: LoginUser) => {
-  const {data, error} = await supabaseClient.auth.signInWithPassword({email, password})
+export const loginWithEmail = async ({ email, password }: LoginUser) => {
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
-    toast.error(error.message);
-    console.log(error)
-    return
+    toast.error(error.message || "An error occurred");
+    return;
   }
 
-  console.log(error, data)
+  return data;
+};
 
-  return data
-}
+export const signOut = async () => {
+  toast.loading("Signing out...");
+  console.log("running")
+  const { error } = await supabaseClient.auth.signOut();
+  console.log("finished running")
+
+  if (error) {
+    toast.error("An error occurred!");
+    return error
+  }
+
+};

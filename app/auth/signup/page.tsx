@@ -21,6 +21,7 @@ export type CreateUser = z.infer<typeof createAccountSchema>;
 
 const Signup = () => {
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const {
     handleSubmit,
@@ -31,13 +32,17 @@ const Signup = () => {
   } = useForm<CreateUser>({ resolver: zodResolver(createAccountSchema) });
 
   const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
+    setLoading(true)
     const toastID = toast.loading("Creating your account...");
     console.log(fields);
     const res = await signupWithEmail(fields);
 
-    res && setShowModal(true);
-
-    toast.dismiss(toastID);
+      res && setShowModal(true);
+      
+      
+      reset()
+      toast.dismiss(toastID);
+      setLoading(false)
   };
 
   return (
@@ -62,6 +67,7 @@ const Signup = () => {
         type="text"
         id="firstname"
         autoFocus={true}
+        disabled={loading}
         placeholder="Firstname"
         {...register("firstname")}
         icon={<FaRegUser className="auth-icons" />}
@@ -75,6 +81,7 @@ const Signup = () => {
       <Input
         type="text"
         id="lastname"
+        disabled={loading}
         placeholder="Lastname"
         {...register("lastname")}
         icon={<FaRegUser className="auth-icons" />}
@@ -88,6 +95,7 @@ const Signup = () => {
       <Input
         id="email"
         type="email"
+        disabled={loading}
         placeholder="Email"
         {...register("email")}
         icon={<MdOutlineMail className="auth-icons" />}
@@ -97,6 +105,7 @@ const Signup = () => {
       <Input
         id="password"
         type="password"
+        disabled={loading} 
         placeholder="Password"
         {...register("password")}
         icon={<MdOutlineMail className="auth-icons" />}
@@ -105,6 +114,7 @@ const Signup = () => {
       />
       <Input
         type="password"
+        disabled={loading}
         id="confirmPassword"
         placeholder="Confirm Password"
         {...register("confirmPassword")}
@@ -114,11 +124,13 @@ const Signup = () => {
       />
       <button
         className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300"
+        disabled={loading}
         onClick={handleSubmit(onSubmit)}>
         Create Account
       </button>
       <button
         type="button"
+        disabled={loading}
         className="border rounded-full font-medium w-full py-3 text-sm flex justify-center items-center gap-2">
         <FcGoogle className="text-xl" /> <p>Continue with Google</p>
       </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
@@ -18,14 +18,18 @@ export type LoginUser = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginUser> = async (fields) => {
+    setLoading(true);
     const toastID = toast.loading("Logging you in...");
 
     const res = await loginWithEmail(fields);
- res && router.push("/menu");
+
+    res && router.replace("/menu/desserts");
 
     toast.dismiss(toastID);
+    setLoading(false);
   };
 
   const {
@@ -39,6 +43,7 @@ const Login = () => {
       <Input
         id="email"
         type="email"
+        disabled={loading}
         placeholder="Email"
         {...register("email")}
         icon={<MdOutlineMail className="auth-icons" />}
@@ -48,6 +53,7 @@ const Login = () => {
       <Input
         id="password"
         type="password"
+        disabled={loading}
         placeholder="Password"
         {...register("password")}
         icon={<MdOutlineMail className="auth-icons" />}
@@ -58,13 +64,15 @@ const Login = () => {
         Forgot your Password?
       </Link>
       <button
-        className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300"
+        className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300 disabled:bg-gray-400 disabled:text-gray-100"
+        disabled={loading}
         onClick={handleSubmit(onSubmit)}>
-        Log in
+        {loading ? "Loading..." : "Login"}
       </button>
       <button
         type="button"
-        className="border rounded-full font-medium w-full py-3 text-sm flex justify-center items-center gap-2 mb-4">
+        disabled={loading}
+        className="border rounded-full font-medium w-full py-3 text-sm flex justify-center items-center gap-2 mb-4 ">
         <FcGoogle className="text-xl" /> <p>Continue with Google</p>
       </button>
 
