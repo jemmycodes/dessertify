@@ -40,15 +40,12 @@ export const loginWithEmail = async ({ email, password }: LoginUser) => {
   return data;
 };
 
-export const signOut = async () => {
-  toast.loading("Signing out...");
-  console.log("running")
+export const signUserOut = async () => {
   const { error } = await supabaseClient.auth.signOut();
-  console.log("finished running")
 
   if (error) {
-    toast.error("An error occurred!");
-    return error
+    return error;
   }
 
+  return;
 };
