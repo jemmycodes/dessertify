@@ -26,10 +26,17 @@ const Login = () => {
 
     const res = await loginWithEmail(fields);
 
-    res && router.replace("/menu/desserts");
-
-    toast.dismiss(toastID);
+    if (res?.session) {
+      setLoading(false);
+      toast.success("Login successful, please hold on while we redirect...", {
+        id: toastID,
+      });
+      router.push("/menu/desserts");
+      return;
+    }
+    
     setLoading(false);
+    toast.dismiss(toastID);
   };
 
   const {

@@ -15,6 +15,9 @@ const config: Config = {
         "main-layout": "85px 1fr",
         "menu-cards-layout": "repeat(auto-fill, minmax(300px, 1fr))",
       },
+      gridTemplateRows: {
+        "sm-main-layout": "60px 1fr",
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

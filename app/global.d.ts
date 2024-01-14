@@ -7,6 +7,12 @@ type MenuTypes = {
   slug: string;
 };
 
+ namespace JSX {
+   interface IntrinsicElements {
+     "l-dot-spinner": any;
+   }
+ }
+
 type Params = {
   params: Record<string, string>;
 };

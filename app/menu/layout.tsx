@@ -1,15 +1,12 @@
-"use client";
-
+import MenuNavigation from "../_components/customLayouts/MenuNavigation";
 import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 
 const MenuLayout = ({ children }: Props) => {
   return (
     <PagesWrapper>
-      <div>
+      <MenuNavigation />
 
-     
-      <div className="p-5">{children}</div>
-      </div>
+      <section>{children} </section>
     </PagesWrapper>
   );
 };

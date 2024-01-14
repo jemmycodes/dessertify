@@ -24,15 +24,16 @@
   }
 
   .menu-nav {
-    @apply flex gap-3 py-4 overflow-x-scroll scrollbar-hide;
+    @apply flex gap-3 py-2 overflow-x-scroll scrollbar-hide;
   }
 
-  .menu-nav li a {
-    @apply w-fit px-5 py-2 rounded-full text-sm flex gap-1 items-center whitespace-nowrap hover:scale-110 duration-500 transition-all;
+  .menu-nav li a,
+  button {
+    @apply py-2 flex min-w-[7rem] w-full whitespace-nowrap items-center justify-center rounded-full text-sm gap-4;
   }
 
   .active {
-    @apply bg-orange text-white;
+    @apply bg-orange text-white ;
   }
 
   .not-active {

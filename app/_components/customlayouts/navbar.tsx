@@ -1,44 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import logo from "@/public/logo.webp";
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { signUserOut } from "@/app/_lib/helpers/supabase";
 
 const Navbar = () => {
-  const router = useRouter();
   const pathname = usePathname();
 
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleSignOut = async () => {
-    try {
-      setLoading(true);
-      const error = await signUserOut();
-
-      if (error) {
-        console.log(error)
-        throw new Error("An error Occurred");
-      }
-
-      router.push("/auth/login");
-      console.log("refreshed")
-    } catch (error) {
-      console.log("Error")
-      setError(true);
-    } finally {
-
-      setLoading(false);
-      console.log(loading, error)
-    }
-  };
-
   return (
-    <nav className="-translate-x-1/2 fixed bottom-5 w-[90%] bg-white/20 backdrop-blur-[5px] shadow-lg rounded-full px-5 py-3  left-1/2  max-w-sm md:sticky md:h-screen md:-translate-x-0 md:left-0 md:bg-white md:rounded-none md:px-4 md:flex md:justify-center md:top-0 md:max-w-[5rem]">
+    <nav className="-translate-x-1/2 fixed bottom-5 w-[90%] bg-white/20 backdrop-blur-[5px] shadow-lg rounded-full px-5 py-3  left-1/2  max-w-sm md:sticky md:h-screen md:-translate-x-0 md:left-0 md:bg-white md:w-full md:rounded-none md:flex md:flex-col md:justify-between md:top-0 ">
+      <Link href="/" className="w-fit  hidden md:flex">
+        <Image src={logo} height={70} width={70} alt="Logo" />
+      </Link>
       <ul className="flex justify-between text-xl text-black/80 items-center md:flex-col md:justify-center md:gap-4 ">
         <li>
           <Link
@@ -62,19 +40,22 @@ const Navbar = () => {
           </Link>
         </li>
 
-        <li>
+        <li className="md:hidden">
           <Link
             className={pathname === "/auth/signup" ? "active-link" : "nav-link"}
             href="/auth/signup">
             <IoMdLogIn />
           </Link>
         </li>
-        <li>
-          <button className="nav-link" onClick={handleSignOut}>
-            <IoMdLogOut />
-          </button>
-        </li>
       </ul>
+      <button
+        className="nav-link text-2xl hidden md:block"
+        onClick={async (e) => {
+          e.preventDefault();
+          await signUserOut();
+        }}>
+        <IoMdLogOut />
+      </button>
     </nav>
   );
 };

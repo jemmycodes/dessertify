@@ -1,11 +1,9 @@
 import Image from "next/image";
-import { Toaster } from "react-hot-toast";
 import dessertBg from "../../public/dessert-bg.jpeg";
 
 const AuthenticationLayout = ({ children }: Props) => {
   return (
     <>
-      <Toaster />
       <main className=" w-screen h-screen bg-auth-page-bg flex justify-center items-center">
         <Image
           src={dessertBg}

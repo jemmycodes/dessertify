@@ -40,12 +40,18 @@ export const loginWithEmail = async ({ email, password }: LoginUser) => {
   return data;
 };
 
-export const signUserOut = async () => {
+export const signUserOut: () => Promise<void> = async () => {
+  const toastID = toast.loading("Signing out...");
+
   const { error } = await supabaseClient.auth.signOut();
 
   if (error) {
-    return error;
+    toast.error("An error occurred!, please try again", { id: toastID });
+    return;
   }
+
+  toast.success("You have been signed out, redirecting...", { id: toastID });
+  window.location.href = "/auth/login";
 
   return;
 };

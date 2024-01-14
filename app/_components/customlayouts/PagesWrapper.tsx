@@ -1,15 +1,17 @@
-import { Toaster } from "react-hot-toast";
 import Navbar from "./navbar";
+import Header from "./Header";
 
 const PagesWrapper = ({ children }: Props) => {
   return (
     <>
-    <Toaster/>
-    <main className="w-full bg-orange/10 md:grid md:grid-cols-main-layout p-4 md:p-0 min-h-screen">
-      <Navbar />
-      {children}
-      </main>
-      </>
+      <div className="  bg-gray-100 md:grid  md:grid-cols-main-layout  min-h-screen ">
+        <Navbar />
+        <div>
+          <Header />
+          <div className="max-w-6xl py-3 px-4">{children}</div>
+        </div>
+      </div>
+    </>
   );
 };
 

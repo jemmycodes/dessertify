@@ -11,15 +11,17 @@ const protectedRoutes = ["/cart", "/profile"];
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
-  const { data: {session}, error } = await supabase.auth.getSession();
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
 
- 
-
-  if (!session) {
-    console.log("no data, please get out of here!!");
+  if (req.nextUrl.pathname === "/menu") {
+    return NextResponse.redirect(new URL("/menu/desserts", req.url));
   }
 
   if (session && req.nextUrl.pathname.includes("auth")) {
+    console.log("redirecting to menu...");
     return NextResponse.redirect(new URL("/menu/desserts", req.url));
   }
 
