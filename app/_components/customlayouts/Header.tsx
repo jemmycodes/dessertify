@@ -17,7 +17,7 @@ const Header = () => {
         <Link href="/profile" className="md:hidden">
           <RxAvatar />
         </Link>
-        <Search />
+        <Search smHidden={true} />
         <h1 className="uppercase text-lg  font-semibold md:hidden">
           {heading}
         </h1>

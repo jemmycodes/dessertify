@@ -1,13 +1,6 @@
 import Link from "next/link";
 
-const MenuCard = ({
-  name,
-  description,
-  photoUrl,
-  _id,
-  category,
-  slug,
-}: MenuTypes) => {
+const MenuCard = ({ name, description, photoUrl }: MenuTypes) => {
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
@@ -16,9 +9,9 @@ const MenuCard = ({
         src={photoUrl}
         loading="lazy"
         alt={`Image of  a ${name}`}
-        width={70}
-        height={75}
-        className="object-cover w-full  max-w-[40%] rounded-l-md"
+        width={140}
+        height={65}
+        className="object-cover w-full  max-w-[35%] rounded-l-md"
       />
       <div className="flex flex-col justify-between p-3 gap-3">
         <h2 className="font-semibold text-lg">{name}</h2>

@@ -50,9 +50,11 @@ const Navbar = () => {
       </ul>
       <button
         className="nav-link text-2xl hidden md:block"
-        onClick={async (e) => {
-          e.preventDefault();
-          await signUserOut();
+        onClick={(e) => {
+          async () => {
+            e.preventDefault();
+            await signUserOut();
+          };
         }}>
         <IoMdLogOut />
       </button>

@@ -12,7 +12,7 @@ import Input from "@/app/_components/ui/Input";
 import { MdOutlineMail } from "react-icons/md";
 import Dialog from "@/app/_components/ui/Dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { createAccountSchema } from "@/app/_lib/utils/schema";
 import { signupWithEmail } from "@/app/_lib/helpers/supabase";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
@@ -21,7 +21,7 @@ export type CreateUser = z.infer<typeof createAccountSchema>;
 
 const Signup = () => {
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const {
     handleSubmit,
@@ -32,17 +32,18 @@ const Signup = () => {
   } = useForm<CreateUser>({ resolver: zodResolver(createAccountSchema) });
 
   const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
-    setLoading(true)
+    setLoading(true);
     const toastID = toast.loading("Creating your account...");
     console.log(fields);
     const res = await signupWithEmail(fields);
 
-      res && setShowModal(true);
-      
-      
-      reset()
-      toast.dismiss(toastID);
-      setLoading(false)
+    res && setShowModal(true);
+
+    reset();
+    toast.dismiss(toastID);
+    setLoading(false);
+
+    return;
   };
 
   return (
@@ -105,7 +106,7 @@ const Signup = () => {
       <Input
         id="password"
         type="password"
-        disabled={loading} 
+        disabled={loading}
         placeholder="Password"
         {...register("password")}
         icon={<MdOutlineMail className="auth-icons" />}
@@ -125,7 +126,9 @@ const Signup = () => {
       <button
         className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300"
         disabled={loading}
-        onClick={handleSubmit(onSubmit)}>
+        onClick={() => {
+          handleSubmit(onSubmit);
+        }}>
         Create Account
       </button>
       <button

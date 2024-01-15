@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import { supabaseClient } from "@/app/_lib/helpers/supabase";
 
 const Desserts = ({ params: { id } }: Params) => {
-  const [menu, setMenu] = useState<any>(null);
+  const [menu, setMenu] = useState<MenuTypes>();
   const [quantity, setQuantity] = useState<number>(1);
-  const [loading, setLoading] = useState<Boolean>(true);
-  const [error, setError] = useState<Boolean | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -18,8 +18,10 @@ const Desserts = ({ params: { id } }: Params) => {
         .select("*")
         .eq("_id", id);
 
-      error ? setError(true) : setMenu(data[0]);
-    })();
+      error ? setError(true) : setMenu(data[0] as MenuTypes);
+    })()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
     setLoading(false);
   }, [id]);
 
@@ -27,10 +29,9 @@ const Desserts = ({ params: { id } }: Params) => {
     return <p>Loading</p>;
   }
 
-  if (error as any) {
+  if (error as unknown as boolean) {
     return <div>An error occured</div>;
   }
-
 
   return (
     menu && (
@@ -39,7 +40,7 @@ const Desserts = ({ params: { id } }: Params) => {
           <img
             src={menu.photoUrl}
             loading="lazy"
-            alt={`Image of  a ${name}`}
+            alt={menu.name}
             height={300}
             className="object-cover  md:w-1/2 rounded"
           />
@@ -72,14 +73,15 @@ const Desserts = ({ params: { id } }: Params) => {
                   className="text-black w-full text-center bg-transparent"
                   value={quantity}
                   onChange={(e) => {
-                    setQuantity(+e.target.value)
+                    setQuantity(+e.target.value);
                   }}
                 />
                 <FaMinus
                   className="w-full text-orange cursor-pointer"
                   onClick={() => {
-                    if (quantity <=1) return
-                    setQuantity((prev) => prev - 1)}}
+                    if (quantity <= 1) return;
+                    setQuantity((prev) => prev - 1);
+                  }}
                 />
               </span>
               <button className="bg-orange text-white px-4 py-2 w-full rounded font-medium flex gap-3 items-center justify-center">

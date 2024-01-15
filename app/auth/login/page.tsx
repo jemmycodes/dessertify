@@ -10,7 +10,7 @@ import { MdOutlineMail } from "react-icons/md";
 import Input from "@/app/_components/ui/Input";
 import { loginSchema } from "@/app/_lib/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
 import { loginWithEmail } from "@/app/_lib/helpers/supabase";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
 
@@ -34,7 +34,7 @@ const Login = () => {
       router.push("/menu/desserts");
       return;
     }
-    
+
     setLoading(false);
     toast.dismiss(toastID);
   };
@@ -73,7 +73,7 @@ const Login = () => {
       <button
         className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300 disabled:bg-gray-400 disabled:text-gray-100"
         disabled={loading}
-        onClick={handleSubmit(onSubmit)}>
+        onClick={() => handleSubmit(onSubmit)}>
         {loading ? "Loading..." : "Login"}
       </button>
       <button

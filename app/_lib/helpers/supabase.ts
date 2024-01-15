@@ -1,11 +1,12 @@
-import { LoginUser } from "@/app/auth/login/page";
-import { CreateUser } from "@/app/auth/signup/page";
+import { type LoginUser } from "@/app/auth/login/page";
+import { type CreateUser } from "@/app/auth/signup/page";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 
 export const supabaseClient = createClientComponentClient();
 
 export const signupWithEmail = async (fields: CreateUser) => {
+  
   const { email, password, firstname, lastname } = fields;
 
   const { data, error } = await supabaseClient.auth.signUp({

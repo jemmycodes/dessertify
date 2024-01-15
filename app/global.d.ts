@@ -1,3 +1,21 @@
+declare module "*.jpeg" {
+  const value: string;
+  export default value;
+}
+declare module "*.webp" {
+  const value: string;
+  export default value;
+}
+declare module "*.svg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.png" {
+  const value: string;
+  export default value;
+}
+
 type MenuTypes = {
   _id: string;
   name: string;
@@ -7,11 +25,9 @@ type MenuTypes = {
   slug: string;
 };
 
- namespace JSX {
-   interface IntrinsicElements {
-     "l-dot-spinner": any;
-   }
- }
+interface IntrinsicElements {
+  "l-dot-spinner": unknown;
+}
 
 type Params = {
   params: Record<string, string>;

@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import { NextRequest, NextResponse } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 
@@ -13,12 +12,8 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient({ req, res });
   const {
     data: { session },
-    error,
   } = await supabase.auth.getSession();
 
-  if (req.nextUrl.pathname === "/menu") {
-    return NextResponse.redirect(new URL("/menu/desserts", req.url));
-  }
 
   if (session && req.nextUrl.pathname.includes("auth")) {
     console.log("redirecting to menu...");

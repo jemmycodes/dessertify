@@ -7,12 +7,11 @@ export async function GET(request: Request) {
 
   const code = requestUrl.searchParams.get("code");
 
-  if (code) {
+  if (code === "" || code === undefined) {
     const cookieStore = cookies();
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-    
-    return NextResponse.redirect(requestUrl.origin);
+  return NextResponse.redirect(requestUrl.origin);
 }
