@@ -1,8 +1,6 @@
-
-
 const LoadingSpinner = () => {
   return (
-    <div className="h-screen w-screen flex justify-center items-center  bg-red-400">
+    <div className="h-[78vh]  w-full  flex justify-center items-center">
       <div className="container">
         <div className="dot"></div>
         <div className="dot"></div>

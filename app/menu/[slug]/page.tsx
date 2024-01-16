@@ -4,8 +4,6 @@ import { supabaseClient } from "@/app/_lib/helpers/supabase";
 const MenuItems = async ({ params: { slug } }: Params) => {
   const { data: menu, error } = await supabaseClient.from("menu").select("*");
 
-  console.log(menu, error)
-
   if (error) {
     return <p>An error occurred</p>;
   }

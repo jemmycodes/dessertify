@@ -24,7 +24,7 @@ const MenuNavigation = () => {
         </li>
         <li>
           <Link
-            href="/menu/Donuts"
+            href="/menu/Donut"
             className={pathname === "/menu/Donut" ? "active" : "not-active"}>
             <Image src={donut} alt="donut" width={20} height={20} />
             <p>Donuts</p>
