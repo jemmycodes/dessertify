@@ -1,15 +1,21 @@
-import Link from "next/link";
+"use client";
 
-const MenuCard = ({ name, description, photoUrl }: MenuTypes) => {
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const MenuCard = ({ name, description, photoUrl, _id, slug }: MenuTypes) => {
+  const pathname = usePathname();
+  console.log(pathname);
+
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
-      href="">
+      href={`${slug}/dessert/${_id}`}>
       <img
         src={photoUrl}
         loading="lazy"
         alt={`Image of  a ${name}`}
-        width={140}
+        width={200}
         height={65}
         className="object-cover w-full  max-w-[35%] rounded-l-md"
       />

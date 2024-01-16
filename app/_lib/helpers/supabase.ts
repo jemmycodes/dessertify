@@ -1,12 +1,14 @@
 import { type LoginUser } from "@/app/auth/login/page";
 import { type CreateUser } from "@/app/auth/signup/page";
+import { type PostgrestError } from "@supabase/supabase-js";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import toast from "react-hot-toast";
 
 export const supabaseClient = createClientComponentClient();
 
+// auth
+
 export const signupWithEmail = async (fields: CreateUser) => {
-  
   const { email, password, firstname, lastname } = fields;
 
   const { data, error } = await supabaseClient.auth.signUp({
@@ -55,4 +57,33 @@ export const signUserOut: () => Promise<void> = async () => {
   window.location.href = "/auth/login";
 
   return;
+};
+
+// database functions
+export const fetchTable = async (
+  name: string,
+  column: string = "*"
+): Promise<{
+  data: MenuTypes[] | null;
+  error: PostgrestError | null;
+}> => {
+  const { data, error } = await supabaseClient.from(name).select(column);
+  // @ts-expect-error supabase-types-not-correctly-exported
+  return { data, error };
+};
+
+export const fetchFilteredMenu = async (
+  query: string
+): Promise<{
+  data: MenuTypes[] | null;
+  error: PostgrestError | null;
+}> => {
+  const { data, error } = await supabaseClient
+    .from("menu")
+    .select("*")
+    .filter("name", "ilike", `%${query}%`);
+
+  console.log(data);
+
+  return { data, error };
 };

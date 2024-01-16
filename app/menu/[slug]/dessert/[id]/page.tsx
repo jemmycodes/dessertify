@@ -30,7 +30,7 @@ const Desserts = ({ params: { id } }: Params) => {
   }
 
   if (error as unknown as boolean) {
-    return <div>An error occured</div>;
+    return <div>An error occurred</div>;
   }
 
   return (

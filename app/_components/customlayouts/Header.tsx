@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import Search from "../ui/Search";
+import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import { FaShoppingCart } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
+// handle the e.target.value state
+
 const Header = () => {
   const pathname = usePathname();
+  const [search, setSearch] = useState("");
 
   const heading = pathname.split("/")[1];
 
@@ -17,7 +21,14 @@ const Header = () => {
         <Link href="/profile" className="md:hidden">
           <RxAvatar />
         </Link>
-        <Search smHidden={true} />
+        <Search
+          smHidden={true}
+          search={search}
+          onSearch={(input: string) => {
+            console.log(input);
+            setSearch(input);
+          }}
+        />
         <h1 className="uppercase text-lg  font-semibold md:hidden">
           {heading}
         </h1>

@@ -22,7 +22,7 @@ type MenuTypes = {
   category: string;
   photoUrl: string;
   description: string;
-  slug: string;
+  slug: string
 };
 
 interface IntrinsicElements {
