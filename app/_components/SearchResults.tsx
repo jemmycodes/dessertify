@@ -5,7 +5,7 @@ const SearchResult = ({ result }: { result: MenuTypes }) => {
     <Link
       href={`/menu/${result.category}/dessert/${result._id}`}
       key={result._id}>
-      <li className="hover:text-orange/70 cursor-pointer ">
+      <li className="hover:text-orange cursor-pointer ">
         <span className="font-semibold"> {result.name}</span> in{" "}
         <span className="font-semibold italic text-orange">
           {result.category === "Ice_Cream" ? "Ice Cream" : result.category}

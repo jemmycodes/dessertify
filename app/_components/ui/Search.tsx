@@ -1,6 +1,7 @@
 "use client";
 
 import { FaSearch } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import SearchResult from "../SearchResults";
 import SearchResultPane from "../SearchResultPane";
@@ -12,8 +13,15 @@ interface SearchProps {
 }
 
 const Search = ({ smHidden, search, onSearch }: SearchProps) => {
+  const pathname = usePathname();
+
   const [searchResults, setSearchResults] = useState<MenuTypes[] | null>([]);
   const [status, setStatus] = useState<"loading" | "error" | "idle">("idle");
+
+  useEffect(() => {
+    onSearch("");
+    // eslint-disable-next-line
+  }, [pathname]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {

@@ -16,7 +16,7 @@ const Header = () => {
   const heading = pathname.split("/")[1];
 
   return (
-    <header className="bg-white text-2xl py-4 px-3 sticky top-0 left-0 shadow-lg">
+    <header className="bg-white text-2xl py-4 px-3 sticky top-0 left-0 shadow-lg z-50">
       <div className="max-w-6xl flex gap-4   items-center justify-between">
         <Link href="/profile" className="md:hidden">
           <RxAvatar />
@@ -25,6 +25,7 @@ const Header = () => {
           smHidden={true}
           search={search}
           onSearch={(input: string) => {
+            console.log(input);
             setSearch(input);
           }}
         />
