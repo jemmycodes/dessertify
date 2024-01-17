@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { useState } from "react";
-import { type ChangeEvent } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import SearchResult from "../SearchResults";
+import SearchResultPane from "../SearchResultPane";
 import { fetchFilteredMenu } from "@/app/_lib/helpers/supabase";
 interface SearchProps {
   smHidden: boolean;
@@ -15,21 +15,24 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
   const [searchResults, setSearchResults] = useState<MenuTypes[] | null>([]);
   const [status, setStatus] = useState<"loading" | "error" | "idle">("idle");
 
-  const handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
-    setStatus("loading");
-    onSearch(e.target.value);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      void (async () => {
+        const { data: menu, error } = await fetchFilteredMenu(search.trim());
 
-    const { data: menu, error } = await fetchFilteredMenu(e.target.value);
+        !error && setSearchResults(menu);
 
-    !error && setSearchResults(menu);
+        if (error) {
+          setStatus("error");
+          return;
+        }
 
-    if (error) {
-      setStatus("error");
-      return;
-    }
+        setStatus("idle");
+      })();
+    }, 500);
 
-    setStatus("idle");
-  };
+    return () => clearTimeout(timeout);
+  }, [search]);
 
   return (
     <div
@@ -41,35 +44,30 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
       <input
         type="text"
         value={search}
-        onChange={(e) => void handleSearch(e)}
+        onChange={(e) => {
+          setStatus("loading");
+          onSearch(e.target.value);
+        }}
         placeholder="Search"
         className="border rounded-md w-full  text-black px-4 py-2 focus:outline-none  focus:border-orange/70 text-sm "
       />
       <FaSearch className="absolute top-[30%] right-4 text-gray-400 text-sm" />
-      {search?.length > 0 && (
-        <ul className="bg-white w-full max-w-md  shadow-lg p-4 text-sm absolute h-screen max-h-48  overflow-scroll scrollbar-hide flex flex-col gap-4 rounded-lg">
-          {status === "loading" && <p className="text-center">Loading...</p>}
 
-          {status === "error" && (
-            <p className="text-center">An error occurred!</p>
+      {search !== "" && (
+        <SearchResultPane status={status}>
+          {searchResults && searchResults.length ? (
+            searchResults.map((result) => (
+              <SearchResult result={result} key={result._id} />
+            ))
+          ) : (
+            <p>
+              No result(s) found for
+              <span className="font-semibold text-orange ">
+                &quot;{search}&quot;
+              </span>
+            </p>
           )}
-
-          {search.length > 0 && searchResults?.length === 0 && (
-            <p>No results found</p>
-          )}
-
-          {searchResults &&
-            searchResults.length > 0 &&
-            searchResults.map((results) => (
-              <Link
-                href={`/menu/${results.category}/dessert/${results._id}`}
-                key={results._id}>
-                <li className="hover:text-orange/70 cursor-pointer">
-                  {results.name}
-                </li>
-              </Link>
-            ))}
-        </ul>
+        </SearchResultPane>
       )}
     </div>
   );

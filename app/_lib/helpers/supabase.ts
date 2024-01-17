@@ -22,7 +22,6 @@ export const signupWithEmail = async (fields: CreateUser) => {
 
   if (error) {
     toast.error(error.message);
-    console.log(error);
     return;
   }
 
@@ -78,12 +77,11 @@ export const fetchFilteredMenu = async (
   data: MenuTypes[] | null;
   error: PostgrestError | null;
 }> => {
+  console.log("async filterign started")
   const { data, error } = await supabaseClient
     .from("menu")
     .select("*")
     .filter("name", "ilike", `%${query}%`);
-
-  console.log(data);
 
   return { data, error };
 };

@@ -12,16 +12,14 @@ const Desserts = ({ params: { id } }: Params) => {
   const [error, setError] = useState<boolean | null>(null);
 
   useEffect(() => {
-    (async () => {
+    void (async () => {
       const { data, error } = await supabaseClient
         .from("menu")
         .select("*")
         .eq("_id", id);
 
       error ? setError(true) : setMenu(data[0] as MenuTypes);
-    })()
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    })();
     setLoading(false);
   }, [id]);
 
@@ -64,7 +62,6 @@ const Desserts = ({ params: { id } }: Params) => {
                 <FaPlus
                   className="w-full text-orange"
                   onClick={() => {
-                    console.log("Added!");
                     setQuantity((prev) => prev + 1);
                   }}
                 />

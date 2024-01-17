@@ -34,7 +34,6 @@ const Signup = () => {
   const onSubmit: SubmitHandler<CreateUser> = async (fields) => {
     setLoading(true);
     const toastID = toast.loading("Creating your account...");
-    console.log(fields);
     const res = await signupWithEmail(fields);
 
     res && setShowModal(true);

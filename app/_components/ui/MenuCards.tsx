@@ -1,12 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 const MenuCard = ({ name, description, photoUrl, _id, slug }: MenuTypes) => {
-  const pathname = usePathname();
-  console.log(pathname);
-
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
