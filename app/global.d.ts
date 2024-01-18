@@ -25,6 +25,10 @@ type MenuTypes = {
   slug: string
 };
 
+interface CartType extends MenuTypes {
+  quantity: number;
+}
+
 interface IntrinsicElements {
   "l-dot-spinner": unknown;
 }

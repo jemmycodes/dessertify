@@ -1,17 +1,18 @@
 "use client";
 
 import { z } from "zod";
-import React, { useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { MdOutlineMail } from "react-icons/md";
 import Input from "@/app/_components/ui/Input";
-import { loginSchema } from "@/app/_lib/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { loginSchema } from "@/app/_lib/helpers/schema";
 import { loginWithEmail } from "@/app/_lib/helpers/supabase";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import usePasswordIcon from "@/app/_lib/hooks/usePasswordIcon";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
 
 export type LoginUser = z.infer<typeof loginSchema>;
@@ -19,6 +20,7 @@ export type LoginUser = z.infer<typeof loginSchema>;
 const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { icon, showPassword } = usePasswordIcon();
 
   const onSubmit: SubmitHandler<LoginUser> = async (fields) => {
     setLoading(true);
@@ -58,12 +60,12 @@ const Login = () => {
         className={errors.email ? "auth-input-error" : "auth-input"}
       />
       <Input
+        icon={icon}
         id="password"
-        type="password"
         disabled={loading}
         placeholder="Password"
         {...register("password")}
-        icon={<MdOutlineMail className="auth-icons" />}
+        type={showPassword ? "text" : "password"}
         errorMessage={errors.password && errors.password.message}
         className={errors.password ? "auth-input-error" : "auth-input"}
       />
