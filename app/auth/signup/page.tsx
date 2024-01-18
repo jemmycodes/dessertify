@@ -37,7 +37,6 @@ const Signup = () => {
     const res = await signupWithEmail(fields);
 
     res && setShowModal(true);
-
     reset();
     toast.dismiss(toastID);
     setLoading(false);
@@ -46,7 +45,9 @@ const Signup = () => {
   };
 
   return (
-    <AuthFormWrapper heading="Create an Account">
+    <AuthFormWrapper
+      onSubmitForm={handleSubmit(onSubmit)}
+      heading="Create an Account">
       {showModal && (
         <Dialog
           heading="Verify your Account"
@@ -124,10 +125,8 @@ const Signup = () => {
       />
       <button
         className="rounded-full text-sm font-medium bg-orange text-white w-full py-3 mt-3 shadow-lg hover:brightness-90 duration-300"
-        disabled={loading}
-        onClick={() => {
-          handleSubmit(onSubmit);
-        }}>
+        type="submit"
+        disabled={loading}>
         Create Account
       </button>
       <button

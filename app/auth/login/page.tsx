@@ -31,7 +31,7 @@ const Login = () => {
       toast.success("Login successful, please hold on while we redirect...", {
         id: toastID,
       });
-      router.push("/menu/desserts");
+      router.push("/menu/all");
       return;
     }
 
@@ -46,7 +46,7 @@ const Login = () => {
   } = useForm<LoginUser>({ resolver: zodResolver(loginSchema) });
 
   return (
-    <AuthFormWrapper heading="Login">
+    <AuthFormWrapper heading="Login" onSubmitForm={handleSubmit(onSubmit)}>
       <Input
         id="email"
         type="email"

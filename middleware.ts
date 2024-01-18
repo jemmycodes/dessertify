@@ -15,11 +15,11 @@ export async function middleware(req: NextRequest) {
   } = await supabase.auth.getSession();
 
   if (req.nextUrl.pathname === "/menu") {
-    return NextResponse.redirect(new URL("/menu/desserts", req.url))
+    return NextResponse.redirect(new URL("/menu/all", req.url));
   }
 
   if (session && req.nextUrl.pathname.includes("auth")) {
-    return NextResponse.redirect(new URL("/menu/desserts", req.url));
+    return NextResponse.redirect(new URL("/menu/all", req.url));
   }
 
   if (!session && protectedRoutes.includes(req.nextUrl.pathname)) {

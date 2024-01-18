@@ -20,7 +20,6 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
 
   useEffect(() => {
     onSearch("");
-    console.log("pathname changed");
     // eslint-disable-next-line
   }, [pathname]);
 
