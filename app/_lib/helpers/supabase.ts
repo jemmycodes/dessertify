@@ -71,13 +71,23 @@ export const fetchTable = async (
   return { data, error };
 };
 
+export const fetchMenuById = async (id: string) => {
+  console.log("loading")
+  const { data, error } = await supabaseClient
+    .from("menu")
+    .select("*")
+    .eq("_id", id);
+
+  console.log("finished loading")
+  return { data, error };
+};
+
 export const fetchFilteredMenu = async (
   query: string
 ): Promise<{
   data: MenuTypes[] | null;
   error: PostgrestError | null;
 }> => {
-  console.log("async filterign started")
   const { data, error } = await supabaseClient
     .from("menu")
     .select("*")

@@ -25,7 +25,6 @@ const Header = () => {
           smHidden={true}
           search={search}
           onSearch={(input: string) => {
-            console.log(input);
             setSearch(input);
           }}
         />

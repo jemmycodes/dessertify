@@ -17,7 +17,7 @@ const MenuNavigation = () => {
         <li>
           <Link
             href="/menu/all"
-            className={pathname === "/menu/all" ? "active" : "not-active"}>
+            className={pathname.includes("all") ? "active" : "not-active"}>
             <Image src={dessert} alt="donut" width={20} height={20} />
             <p>Desserts</p>
           </Link>
@@ -25,7 +25,7 @@ const MenuNavigation = () => {
         <li>
           <Link
             href="/menu/Donut"
-            className={pathname === "/menu/Donut" ? "active" : "not-active"}>
+            className={pathname.includes("/Donut") ? "active" : "not-active"}>
             <Image src={donut} alt="donut" width={20} height={20} />
             <p>Donuts</p>
           </Link>
@@ -33,7 +33,7 @@ const MenuNavigation = () => {
         <li>
           <Link
             href="/menu/Cookie"
-            className={pathname === "/menu/Cookie" ? "active" : "not-active"}>
+            className={pathname.includes("Cookie") ? "active" : "not-active"}>
             <Image src={cookies} alt="donut" width={20} height={20} />
             <p>Cookie</p>
           </Link>
@@ -42,7 +42,7 @@ const MenuNavigation = () => {
           <Link
             href="/menu/Ice_Cream"
             className={
-              pathname === "/menu/Ice_Cream" ? "active" : "not-active"
+              pathname.includes("Ice_Cream") ? "active" : "not-active"
             }>
             <Image src={icecream} alt="donut" width={20} height={20} />
             <p> Ice Cream</p>
