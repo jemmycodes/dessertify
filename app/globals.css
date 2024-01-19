@@ -133,7 +133,7 @@
   }
 
   .menu-nav li a,
-  button {
+  .menu-nav button {
     @apply py-2 flex min-w-[7rem] w-full whitespace-nowrap items-center justify-center rounded-full text-sm gap-4;
   }
 
@@ -147,5 +147,18 @@
 
   ul.search-results-pane {
     @apply bg-white w-full max-w-md  shadow-lg p-4 text-sm absolute top-10 max-h-48  overflow-scroll scrollbar-hide flex flex-col gap-4 rounded-lg;
+  }
+
+  table {
+    @apply w-full max-w-full;
+  }
+
+  th,
+  td {
+    @apply p-5;
+  }
+
+  th {
+    @apply text-left text-sm;
   }
 }

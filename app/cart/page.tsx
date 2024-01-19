@@ -1,15 +1,20 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import useCartStore from "../_store/useCart";
 import CartItems from "../_components/ui/CartItems";
+
 const Cart = () => {
-  const { cart } = useCartStore(({ cart }) => ({ cart }));
+  const cart = useCartStore(({ cart }) => cart);
+
+  if (!cart.length) {
+    return <div className="text-center">No item in cart</div>;
+  }
 
   return (
-   <>
-      <section className="w-full ">
+    <>
+      <section className="w-full h-[50vh] overflow-scroll scrollbar-hide md:h-[80vh]">
         <div className="flex flex-col w-full max-w-2xl gap-4 p-4 mx-auto md:py-16 md:px-10">
           <header className="flex items-center justify-between w-full pb-4 border-b ">
             <h1 className="text-xl font-bold md:text-2xl">Shopping Cart</h1>
@@ -20,17 +25,15 @@ const Cart = () => {
               Back to Menu
             </Link>
           </header>
-
-          <div
-            className="flex flex-col flex-grow gap-5 overflow-y-scroll h-[20rem] md:h-[30rem] pr-4"
-            id="cart">
+          <ul className="flex flex-col gap-8">
             {cart.map((item) => (
               <CartItems key={item._id} {...item} />
             ))}
-          </div>
+          </ul>
         </div>
       </section>
-      <aside className="md:min-w-[300px] md:max-w-xs w-full rounded-t-3xl md:rounded-t-none  px-8 py-16 text-gray-500 bg-[#f5f5f6] ">
+
+      <aside className="lg:min-w-[300px] lg:max-w-xs w-full rounded-t-3xl lg:rounded-t-none  px-8 py-16 text-gray-500 bg-white shadow-lg">
         <h2 className="max-w-xs pb-4 mx-auto text-xl font-bold text-black border-b">
           Order Summary
         </h2>
@@ -68,7 +71,7 @@ const Cart = () => {
           </div>
         </div>
       </aside>
-      </>
+    </>
   );
 };
 

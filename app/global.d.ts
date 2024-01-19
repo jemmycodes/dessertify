@@ -22,12 +22,16 @@ type MenuTypes = {
   category: string;
   photoUrl: string;
   description: string;
-  slug: string
+  slug: string;
 };
 
-interface CartType extends MenuTypes {
+interface CartType {
+  _id: string;
+  name: string
+  price: number;
   quantity: number;
-  price?: number;
+  photoUrl: string;
+  category: string;
 }
 
 interface IntrinsicElements {

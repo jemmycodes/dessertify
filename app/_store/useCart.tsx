@@ -31,9 +31,33 @@ const useCartStore = create<CartStore>()((set, get) => ({
   removeFromCart: (id) =>
     set((state) => ({ cart: state.cart.filter((item) => item._id !== id) })),
 
-  increaseQuantity: (id) => {},
+  increaseQuantity: (id) => {
+    const { cart } = get();
+    const itemIndex = checkIfItemExists(id, cart);
 
-  decreaseQuantity: (id) => {},
+    const item = cart[itemIndex];
+
+    const newCart = [...cart];
+
+    item.quantity++;
+
+    set(() => ({ cart: newCart }));
+  },
+
+  decreaseQuantity: (id) => {
+    const { cart } = get();
+    const itemIndex = checkIfItemExists(id, cart);
+
+    const item = cart[itemIndex];
+
+    if (item.quantity === 1) return;
+
+    const newCart = [...cart];
+
+    item.quantity--;
+
+    set(() => ({ cart: newCart }));
+  },
 }));
 
 export default useCartStore;
