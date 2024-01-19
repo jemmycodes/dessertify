@@ -11,12 +11,7 @@ const MenuCard = ({
   slug,
   category,
 }: MenuTypes) => {
-  const { cart, addToCart } = useCartStore(({ addToCart, cart }) => ({
-    cart,
-    addToCart,
-  }));
-
-  console.log(cart);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   return (
     <Link
@@ -45,7 +40,7 @@ const MenuCard = ({
               _id,
               slug,
               category,
-              quantity:1
+              quantity: 1,
             });
           }}>
           Add to Cart

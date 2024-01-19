@@ -27,6 +27,7 @@ type MenuTypes = {
 
 interface CartType extends MenuTypes {
   quantity: number;
+  price?: number;
 }
 
 interface IntrinsicElements {

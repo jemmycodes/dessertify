@@ -5,32 +5,35 @@ interface CartStore {
   cart: CartType[];
   addToCart: (item: CartType) => void;
   removeFromCart: (id: string) => void;
+  increaseQuantity: (id: string) => void;
+  decreaseQuantity: (id: string) => void;
 }
 
 const useCartStore = create<CartStore>()((set, get) => ({
   cart: [],
   addToCart: (item) => {
-const {cart} = get()
+    const { cart } = get();
     const itemIndex = checkIfItemExists(item._id, cart);
 
-    console.log(itemIndex);
-
-    if (!itemIndex === -1) {
+    if (itemIndex === -1) {
       set((state) => ({ cart: [...state.cart, item] }));
       return;
     }
 
-      const existingItem = cart[itemIndex]
+    const existingItem = cart[itemIndex];
 
-      existingItem.quantity = existingItem.quantity + item.quantity
+    const newCart = [...cart];
+    existingItem.quantity += item.quantity;
 
-        set((state) => ({ cart: [...state.cart, item] }));
-      
+    set(() => ({ cart: newCart }));
   },
 
-  removeFromCart: (id) => {
-    set((state) => ({ cart: state.cart.filter((item) => item._id !== id) }));
-  },
+  removeFromCart: (id) =>
+    set((state) => ({ cart: state.cart.filter((item) => item._id !== id) })),
+
+  increaseQuantity: (id) => {},
+
+  decreaseQuantity: (id) => {},
 }));
 
 export default useCartStore;
