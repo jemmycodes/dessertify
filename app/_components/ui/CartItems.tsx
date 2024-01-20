@@ -8,7 +8,6 @@ const CartItems = ({
   category,
   _id,
   quantity,
-  price,
 }: CartType) => {
   const { removeFromCart, increaseQuantity, decreaseQuantity } = useCartStore(
     ({ removeFromCart, increaseQuantity, decreaseQuantity }) => ({
