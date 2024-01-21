@@ -8,7 +8,6 @@ const MenuCard = ({
   description,
   photoUrl,
   _id,
-  slug,
   category,
 }: MenuTypes) => {
   const addToCart = useCartStore((state) => state.addToCart);
@@ -35,12 +34,11 @@ const MenuCard = ({
             e.preventDefault();
             addToCart({
               name,
-              description,
               photoUrl,
               _id,
-              slug,
               category,
               quantity: 1,
+              price: 200
             });
           }}>
           Add to Cart
