@@ -4,7 +4,7 @@ export const checkIfItemExists = (id: string, array: CartType[]) => {
 
 export const fetchData = async (
   url: string,
-  slug: undefined | string
+  slug: undefined | string = undefined
 ): Promise<MenuTypes[]> => {
   const res = await fetch(url);
 
