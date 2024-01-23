@@ -41,6 +41,8 @@ const Signup = () => {
     const toastID = toast.loading("Creating your account...");
     const res = await signupWithEmail(fields);
 
+    console.log(res)
+
     res && setShowModal(true);
     reset();
     toast.dismiss(toastID);

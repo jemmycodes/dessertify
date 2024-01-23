@@ -1,97 +1,62 @@
-import { type LoginUser } from "@/app/auth/login/page";
-import { type CreateUser } from "@/app/auth/signup/page";
-import { type PostgrestError } from "@supabase/supabase-js";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import toast from "react-hot-toast";
+// import { type LoginUser } from "@/app/auth/login/page";
+// import { type CreateUser } from "@/app/auth/signup/page";
+// import { type PostgrestError } from "@supabase/supabase-js";
+// import toast from "react-hot-toast";
 
-export const supabaseClient = createClientComponentClient();
+// export const supabaseClient = createClientComponentClient();
 
-// auth
+// // const s
 
-export const signupWithEmail = async (fields: CreateUser) => {
-  const { email, password, firstname, lastname } = fields;
+// // auth
 
-  const { data, error } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: `${location.origin}/auth/callback`,
-      data: { email, firstname, lastname },
-    },
-  });
 
-  if (error) {
-    toast.error(error.message);
-    return;
-  }
 
-  return data;
-};
 
-export const loginWithEmail = async ({ email, password }: LoginUser) => {
-  const { data, error } = await supabaseClient.auth.signInWithPassword({
-    email,
-    password,
-  });
 
-  if (error) {
-    toast.error(error.message || "An error occurred");
-    return;
-  }
+// // database functions
+// export const fetchTable = async (
+//   name: string,
+//   column: string = "*"
+// ): Promise<{
+//   data: MenuTypes[] | null;
+//   error: PostgrestError | null;
+// }> => {
+//   const { data, error } = await supabaseClient.from(name).select(column);
+//   // @ts-expect-error supabase-types-not-correctly-exported
+//   return { data, error };
+// };
 
-  return data;
-};
+// export const insertIntoTable = async (
+//   tableName: string,
+//   item: CartType
+// ) => {
+//  console.log("inserting")
 
-export const signUserOut: () => Promise<void> = async () => {
-  const toastID = toast.loading("Signing out...");
+//   const { error } = await supabaseClient.from(tableName).insert(item)
+  
+//   return error
+// };
 
-  const { error } = await supabaseClient.auth.signOut();
+// export const fetchMenuById = async (id: string) => {
+//   const { data, error } = await supabaseClient
+//     .from("menu")
+//     .select("*")
+//     .eq("_id", id);
 
-  if (error) {
-    toast.error("An error occurred!, please try again", { id: toastID });
-    return;
-  }
+//   console.log("finished loading");
+//   return { data, error };
+// };
 
-  toast.success("You have been signed out, redirecting...", { id: toastID });
-  window.location.href = "/auth/login";
+// export const fetchFilteredMenu = async (
+//   query: string
+// ): Promise<{
+//   data: MenuTypes[] | null;
+//   error: PostgrestError | null;
+// }> => {
+//   const { data, error } = await supabaseClient
+//     .from("menu")
+//     .select("*")
+//     .filter("name", "ilike", `%${query}%`);
 
-  return;
-};
-
-// database functions
-export const fetchTable = async (
-  name: string,
-  column: string = "*"
-): Promise<{
-  data: MenuTypes[] | null;
-  error: PostgrestError | null;
-}> => {
-  const { data, error } = await supabaseClient.from(name).select(column);
-  // @ts-expect-error supabase-types-not-correctly-exported
-  return { data, error };
-};
-
-export const fetchMenuById = async (id: string) => {
-  console.log("loading")
-  const { data, error } = await supabaseClient
-    .from("menu")
-    .select("*")
-    .eq("_id", id);
-
-  console.log("finished loading")
-  return { data, error };
-};
-
-export const fetchFilteredMenu = async (
-  query: string
-): Promise<{
-  data: MenuTypes[] | null;
-  error: PostgrestError | null;
-}> => {
-  const { data, error } = await supabaseClient
-    .from("menu")
-    .select("*")
-    .filter("name", "ilike", `%${query}%`);
-
-  return { data, error };
-};
+//   return { data, error };
+// };

@@ -26,7 +26,7 @@ type MenuTypes = {
 };
 
 interface CartType {
-  _id: string;
+_id: string;
   name: string
   price: number;
   quantity: number;

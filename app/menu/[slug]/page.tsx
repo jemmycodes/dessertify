@@ -1,18 +1,17 @@
 import MenuCard from "@/app/_components/ui/MenuCards";
-import { fetchTable } from "@/app/_lib/helpers/supabase";
+import { fetchData } from "@/app/_lib/helpers/utils";
+// import { fetchTable } from "@/app/_lib/helpers/supabase";
 
 const MenuItems = async ({ params: { slug } }: Params) => {
+  const origin =
+    process.env.NEXT_PUBLIC_SITE_ORIGIN! || "http://localhost:3000";
 
-  const { data: menu, error } = await fetchTable("menu", "*")
-  
-  if (!menu || error) {
-    return <p>An error occurred!</p>
-  }
+  const menu = await fetchData(`${origin}/api/menu`);
 
   return (
     <>
       <section className="flex flex-col gap-5 min-[700px]:grid min-[700px]:grid-cols-menu-cards-layout my-3">
-        {slug === "all" 
+        {slug === "all"
           ? menu.map((item: MenuTypes) => (
               <MenuCard {...item} key={item._id} slug={slug} />
             ))

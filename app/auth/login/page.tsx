@@ -3,14 +3,14 @@
 import { z } from "zod";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { MdOutlineMail } from "react-icons/md";
 import Input from "@/app/_components/ui/Input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/app/_lib/helpers/schema";
-import { loginWithEmail } from "@/app/_lib/helpers/supabase";
+import { loginWithEmail } from "@/app/_lib/supabase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import usePasswordIcon from "@/app/_lib/hooks/usePasswordIcon";
 import AuthFormWrapper from "@/app/_components/customlayouts/AuthFormWrapper";
@@ -27,6 +27,7 @@ const Login = () => {
     const toastID = toast.loading("Logging you in...");
 
     const res = await loginWithEmail(fields);
+
 
     if (res?.session) {
       setLoading(false);

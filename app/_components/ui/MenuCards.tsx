@@ -11,7 +11,7 @@ const MenuCard = ({
   category,
 }: MenuTypes) => {
   const addToCart = useCartStore((state) => state.addToCart);
-
+console.log(_id)
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
@@ -32,13 +32,12 @@ const MenuCard = ({
           className="bg-orange px-4 py-2 rounded-md text-white text-sm font-medium hover:brightness-95 duration-500 transition-all"
           onClick={(e) => {
             e.preventDefault();
-            addToCart({
+            void addToCart({
               name,
+              price: 200,
               photoUrl,
-              _id,
-              category,
               quantity: 1,
-              price: 200
+              category,
             });
           }}>
           Add to Cart

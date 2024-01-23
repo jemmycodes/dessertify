@@ -3,7 +3,7 @@ import { checkIfItemExists } from "../_lib/helpers/utils";
 
 interface CartStore {
   cart: CartType[];
-  addToCart: (item: CartType) => void;
+  addToCart: (item: CartType) => Promise<void>;
   removeFromCart: (id: string) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
@@ -11,7 +11,11 @@ interface CartStore {
 
 const useCartStore = create<CartStore>()((set, get) => ({
   cart: [],
-  addToCart: (item) => {
+  addToCart: async (item) => {
+    console.log("adding to cart", item);
+
+    console.dir(res);
+
     const { cart } = get();
     const itemIndex = checkIfItemExists(item._id, cart);
 
