@@ -1,11 +1,11 @@
 "use client";
 
 import { FaSearch } from "react-icons/fa";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import SearchResult from "../SearchResults";
+import { usePathname } from "next/navigation";
+import { origin } from "@/app/menu/[slug]/page";
 import SearchResultPane from "../SearchResultPane";
-import { fetchFilteredMenu } from "@/app/_lib/helpers/supabase";
 interface SearchProps {
   smHidden: boolean;
   search: string;
@@ -26,14 +26,15 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       void (async () => {
-        const { data: menu, error } = await fetchFilteredMenu(search.trim());
-
-        !error && setSearchResults(menu);
-
-        if (error) {
-          setStatus("error");
-          return;
+        const res = await fetch(`${origin}/api/menu/search?query=${search}`);
+        
+        if (!res.ok) {
+          return setStatus("error");
         }
+
+        const data: MenuTypes[] = (await res.json()) as MenuTypes[];
+
+        setSearchResults(data);
 
         setStatus("idle");
       })();

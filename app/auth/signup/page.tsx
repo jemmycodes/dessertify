@@ -12,8 +12,8 @@ import Input from "@/app/_components/ui/Input";
 import { MdOutlineMail } from "react-icons/md";
 import Dialog from "@/app/_components/ui/Dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signupWithEmail } from "@/app/_lib/supabase/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { signupWithEmail } from "@/app/_lib/helpers/supabase";
 import { createAccountSchema } from "@/app/_lib/helpers/schema";
 import usePasswordIcon from "@/app/_lib/hooks/usePasswordIcon";
 

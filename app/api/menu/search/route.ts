@@ -1,0 +1,21 @@
+import { supabase } from "@/app/_lib/supabase/supabaseInstance";
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+
+  const query = searchParams.get("query");
+
+  const { data, error } = await supabase
+    .from("menu")
+    .select("*")
+    .filter("name", "ilike", `%${query}%`);
+
+  if (error) {
+    return Response.json(error, {
+      status: 400,
+      statusText: "An error occurred!",
+    });
+  }
+
+  return Response.json(data, { status: 200 });
+}

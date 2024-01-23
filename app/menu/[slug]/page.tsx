@@ -1,11 +1,10 @@
 import MenuCard from "@/app/_components/ui/MenuCards";
 import { fetchData } from "@/app/_lib/helpers/utils";
 // import { fetchTable } from "@/app/_lib/helpers/supabase";
+export const origin =
+  process.env.NEXT_PUBLIC_SITE_ORIGIN! || "http://localhost:3000";
 
 const MenuItems = async ({ params: { slug } }: Params) => {
-  const origin =
-    process.env.NEXT_PUBLIC_SITE_ORIGIN! || "http://localhost:3000";
-
   const menu = await fetchData(`${origin}/api/menu`, slug);
 
   return (
