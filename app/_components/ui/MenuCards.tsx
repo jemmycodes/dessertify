@@ -11,7 +11,6 @@ const MenuCard = ({
   category,
 }: MenuTypes) => {
   const addToCart = useCartStore((state) => state.addToCart);
-console.log(_id)
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
