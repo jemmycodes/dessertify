@@ -19,6 +19,7 @@ export const loginWithEmail = async ({ email, password }: LoginUser) => {
   return data;
 };
 
+
 export const signUserOut: () => Promise<void> = async () => {
   const toastID = toast.loading("Signing out...");
 

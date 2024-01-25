@@ -12,9 +12,11 @@ export const fetchData = async (
     throw new Error("An error occurred while fetching menus");
   }
 
-  const { data } = (await res.json()) as { data: MenuTypes[] };
+  const data = (await res.json()) as MenuTypes[];
 
   if (slug === undefined || slug === "all") return data;
+
+  console.log(data, slug);
 
   if (slug !== "all") return data.filter((item) => item.category === slug);
 

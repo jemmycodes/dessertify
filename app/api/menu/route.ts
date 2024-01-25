@@ -1,16 +1,16 @@
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/app/_lib/supabase/supabaseInstance";
 
 export async function GET() {
-import { createClient } from "@supabase/supabase-js";
-
-
   const { data, error } = await supabase.from("menu").select("*");
 
   if (error) {
-    return Response.json({
-      error: "An error occurred while fetching data",
+    return Response.json(error, {
+      status: 500,
+      statusText: "An Error Occurred",
     });
   }
 
-  return Response.json({data});
+  console.log(data, error);
+
+  return Response.json(data, { status: 200 });
 }

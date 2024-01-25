@@ -3,14 +3,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.webp";
+import { usePathname } from "next/navigation";
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io";
+import { signUserOut } from "@/app/_lib/supabase/auth";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
-import { usePathname } from "next/navigation";
-import { signUserOut } from "@/app/_lib/helpers/supabase";
-
 const Navbar = () => {
   const pathname = usePathname();
+
+  const handleSignOut = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await signUserOut();
+  };
 
   return (
     <nav className="-translate-x-1/2 fixed bottom-5 w-[90%] bg-white/20 backdrop-blur-[5px] shadow-lg rounded-full px-5 py-3  left-1/2  max-w-sm md:sticky md:h-screen md:-translate-x-0 md:left-0 md:bg-white md:w-full md:rounded-none md:flex md:flex-col md:justify-between md:top-0 ">
@@ -50,11 +54,8 @@ const Navbar = () => {
       </ul>
       <button
         className="nav-link text-2xl hidden md:block"
-        onClick={(e) => {
-          async () => {
-            e.preventDefault();
-            await signUserOut();
-          };
+        onClick={(event) => {
+          void handleSignOut(event);
         }}>
         <IoMdLogOut />
       </button>
