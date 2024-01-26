@@ -3,6 +3,7 @@ import CartItems from "../ui/CartItems";
 import { BiArrowBack } from "react-icons/bi";
 
 export const CartTable = ({ cart }: { cart: CartType[] }) => {
+  console.log(cart);
   return (
     <section className="w-full h-[50vh] overflow-scroll scrollbar-hide md:h-[80vh]">
       <div className="flex flex-col w-full max-w-2xl gap-4 p-4 mx-auto md:py-16 md:px-10">
@@ -17,7 +18,7 @@ export const CartTable = ({ cart }: { cart: CartType[] }) => {
         </header>
         <ul className="flex flex-col gap-8">
           {cart.map((item) => (
-            <CartItems key={item._id} {...item} />
+            <CartItems key={item.id} {...item} />
           ))}
         </ul>
       </div>

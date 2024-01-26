@@ -1,22 +1,19 @@
 import { origin } from "@/app/menu/[slug]/page";
 import toast from "react-hot-toast";
 
-interface ICategory {
-  category: string;
-}
+type DataTypes = CartType | MenuTypes;
 
 export const checkIfItemExists = (id: string, array: CartType[]) => {
   return array.findIndex((item) => item._id === id);
 };
 
-export const fetchData = async <T extends ICategory>(
+export const fetchData = async <T extends DataTypes>(
   url: string,
   slug: undefined | string = undefined
 ): Promise<T[]> => {
   const res = await fetch(`${origin}${url}`);
 
-
-  console.log(res, res.ok);
+  console.log(res, "res");
 
   if (!res.ok) {
     throw new Error("An error occurred while fetching data");
@@ -24,7 +21,6 @@ export const fetchData = async <T extends ICategory>(
 
   const data = (await res.json()) as T[];
 
-  console.log(data);
 
   if (slug === undefined || slug === "all") return data;
 

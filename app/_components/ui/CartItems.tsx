@@ -2,7 +2,7 @@ import { TiPlus } from "react-icons/ti";
 import { TiMinus } from "react-icons/ti";
 import useCartStore from "@/app/_store/useCart";
 
-const CartItems = ({ photoUrl, name, category, _id, quantity }: CartType) => {
+const CartItems = ({ photoUrl, name, category, id, quantity }: CartType) => {
   const { removeFromCart, increaseQuantity, decreaseQuantity } = useCartStore(
     ({ removeFromCart, increaseQuantity, decreaseQuantity }) => ({
       removeFromCart,
@@ -29,7 +29,7 @@ const CartItems = ({ photoUrl, name, category, _id, quantity }: CartType) => {
         <button
           className=" text-left text-xs"
           onClick={() => {
-            removeFromCart(_id);
+            removeFromCart(id);
           }}>
           Remove
         </button>

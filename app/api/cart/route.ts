@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/app/_lib/supabase/server/supabaseInstance";
+import { date } from "zod";
 
 export const GET = async () => {
   const supabase = createSupabaseServerClient();
@@ -31,3 +32,21 @@ export async function POST(request: Request) {
 
   return Response.json(data, { status: 200, statusText: "OK!" });
 }
+
+export const DELETE = async (request: Request) => {
+  const supabase = createSupabaseServerClient();
+  const { id } = (await request.json()) as { id: number };
+
+  console.log(id);
+
+  const { error } = await supabase.from("cart").delete().eq("id", id);
+
+  if (error) {
+    return Response.json(error.message, {
+      status: 500,
+      statusText: "An error occurred",
+    });
+  }
+
+  return Response.json(date, { status: 200, statusText: "Deleted!" });
+};

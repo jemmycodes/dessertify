@@ -10,7 +10,7 @@ interface CartStore {
   cart: CartType[];
   loading: boolean;
   addToCart: (item: CartType) => Promise<void>;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: number) => Promise<void>;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
 }
@@ -33,7 +33,7 @@ const useCartStore = create<CartStore>()((set, get) => ({
     const itemIndex = checkIfItemExists(item._id, cart);
 
     if (itemIndex === -1) {
-      set((state) => ({ cart: [...state.cart, item,] , loading: false }));
+      set((state) => ({ cart: [...state.cart, item], loading: false }));
       return;
     }
 
@@ -44,11 +44,19 @@ const useCartStore = create<CartStore>()((set, get) => ({
 
     toast.success(`Added ${item.name} to cart`);
 
-    set(() => ({ cart: newCart , loading: false}));
+    set(() => ({ cart: newCart, loading: false }));
   },
 
-  removeFromCart: (id) =>
-    set((state) => ({ cart: state.cart.filter((item) => item._id !== id) })),
+  removeFromCart: async (id) => {
+    const res = await fetch("/api/cart", {
+      method: "DELETE",
+      body: JSON.stringify({ id }),
+    });
+
+    console.log(await res.json());
+
+    set((state) => ({ cart: state.cart.filter((item) => item.id !== id) }));
+  },
 
   increaseQuantity: (id) => {
     const newCart = changeQuantity(get().cart, id, "ADD");
