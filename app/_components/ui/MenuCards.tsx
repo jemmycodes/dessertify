@@ -10,7 +10,10 @@ const MenuCard = ({
   _id,
   category,
 }: MenuTypes) => {
-  const addToCart = useCartStore((state) => state.addToCart);
+  const { addToCart, loading } = useCartStore(({ addToCart, loading }) => ({
+    addToCart,
+    loading,
+  }));
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
@@ -28,7 +31,8 @@ const MenuCard = ({
         <h2 className="font-semibold text-lg">{name}</h2>
         <p className="line-clamp-3 text-sm">{description}</p>
         <button
-          className="bg-orange px-4 py-2 rounded-md text-white text-sm font-medium hover:brightness-95 duration-500 transition-all"
+          className="bg-orange px-4 py-2 rounded-md text-white text-sm font-medium hover:brightness-95 duration-500 transition-all disabled:cursor-not-allowed disabled:bg-gray-300 "
+          disabled={loading}
           onClick={(e) => {
             e.preventDefault();
             void addToCart({

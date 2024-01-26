@@ -1,26 +1,39 @@
 import { create } from "zustand";
-import { checkIfItemExists } from "../_lib/helpers/utils";
+import {
+  changeQuantity,
+  checkIfItemExists,
+  insertData,
+} from "../_lib/helpers/utils";
+import toast from "react-hot-toast";
 
 interface CartStore {
   cart: CartType[];
+  loading: boolean;
   addToCart: (item: CartType) => Promise<void>;
   removeFromCart: (id: string) => void;
   increaseQuantity: (id: string) => void;
   decreaseQuantity: (id: string) => void;
 }
 
-const useCartStore = create<CartStore>()((set, get) => ({
+const initialState = {
   cart: [],
-  addToCart: async (item) => {
-    console.log("adding to cart", item);
+  loading: false,
+};
 
-    console.dir(res);
+const useCartStore = create<CartStore>()((set, get) => ({
+  ...initialState,
+  addToCart: async (item) => {
+    set(() => ({ loading: true }));
+    const res = await insertData("/api/cart", { data: item, table: "cart" });
+
+    if (!res)
+      return set((state) => ({ cart: [...state.cart], loading: false }));
 
     const { cart } = get();
     const itemIndex = checkIfItemExists(item._id, cart);
 
     if (itemIndex === -1) {
-      set((state) => ({ cart: [...state.cart, item] }));
+      set((state) => ({ cart: [...state.cart, item,] , loading: false }));
       return;
     }
 
@@ -29,37 +42,21 @@ const useCartStore = create<CartStore>()((set, get) => ({
     const newCart = [...cart];
     existingItem.quantity += item.quantity;
 
-    set(() => ({ cart: newCart }));
+    toast.success(`Added ${item.name} to cart`);
+
+    set(() => ({ cart: newCart , loading: false}));
   },
 
   removeFromCart: (id) =>
     set((state) => ({ cart: state.cart.filter((item) => item._id !== id) })),
 
   increaseQuantity: (id) => {
-    const { cart } = get();
-    const itemIndex = checkIfItemExists(id, cart);
-
-    const item = cart[itemIndex];
-
-    const newCart = [...cart];
-
-    item.quantity++;
-
+    const newCart = changeQuantity(get().cart, id, "ADD");
     set(() => ({ cart: newCart }));
   },
 
   decreaseQuantity: (id) => {
-    const { cart } = get();
-    const itemIndex = checkIfItemExists(id, cart);
-
-    const item = cart[itemIndex];
-
-    if (item.quantity === 1) return;
-
-    const newCart = [...cart];
-
-    item.quantity--;
-
+    const newCart = changeQuantity(get().cart, id, "REDUCE");
     set(() => ({ cart: newCart }));
   },
 }));

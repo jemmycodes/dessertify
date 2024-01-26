@@ -5,7 +5,7 @@ export const origin =
   process.env.NEXT_PUBLIC_SITE_ORIGIN! || "http://localhost:3000";
 
 const MenuItems = async ({ params: { slug } }: Params) => {
-  const menu = await fetchData(`${origin}/api/menu`, slug);
+  const menu = await fetchData(`/api/menu`, slug);
 
   return (
     <>

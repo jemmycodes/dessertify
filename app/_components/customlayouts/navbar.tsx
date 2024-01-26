@@ -5,7 +5,7 @@ import Image from "next/image";
 import logo from "@/public/logo.webp";
 import { usePathname } from "next/navigation";
 import { IoMdLogOut, IoMdLogIn } from "react-icons/io";
-import { signUserOut } from "@/app/_lib/supabase/auth";
+import { signUserOut } from "@/app/_lib/supabase/client/auth";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineRestaurantMenu } from "react-icons/md";
 const Navbar = () => {

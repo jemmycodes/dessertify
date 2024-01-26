@@ -1,6 +1,6 @@
-import { type LoginUser } from "./../../auth/login/page";
-import { type CreateUser } from "./../../auth/signup/page";
 import toast from "react-hot-toast";
+import { type LoginUser } from "../../../auth/login/page";
+import { type CreateUser } from "../../../auth/signup/page";
 import { createSupabaseBrowserClient } from "./supabaseInstance";
 
 const supabaseClient = createSupabaseBrowserClient();
@@ -18,7 +18,6 @@ export const loginWithEmail = async ({ email, password }: LoginUser) => {
 
   return data;
 };
-
 
 export const signUserOut: () => Promise<void> = async () => {
   const toastID = toast.loading("Signing out...");

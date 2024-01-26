@@ -12,7 +12,7 @@ import Input from "@/app/_components/ui/Input";
 import { MdOutlineMail } from "react-icons/md";
 import Dialog from "@/app/_components/ui/Dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signupWithEmail } from "@/app/_lib/supabase/auth";
+import { signupWithEmail } from "@/app/_lib/supabase/client/auth";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { createAccountSchema } from "@/app/_lib/helpers/schema";
 import usePasswordIcon from "@/app/_lib/hooks/usePasswordIcon";
@@ -41,7 +41,7 @@ const Signup = () => {
     const toastID = toast.loading("Creating your account...");
     const res = await signupWithEmail(fields);
 
-    console.log(res)
+    console.log(res);
 
     res && setShowModal(true);
     reset();

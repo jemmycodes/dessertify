@@ -25,6 +25,11 @@ type MenuTypes = {
   slug: string;
 };
 
+ interface CartRoute {
+    data: CartType;
+    table: string;
+  }
+
 interface CartType {
 _id: string;
   name: string
