@@ -3,7 +3,7 @@ import {
   changeQuantity,
   checkIfItemExists,
   insertData,
-} from "../_lib/helpers/utils";
+// } from "../_lib/helpers/utils";
 import toast from "react-hot-toast";
 
 interface CartStore {
