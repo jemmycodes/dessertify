@@ -17,10 +17,8 @@ const Desserts = ({ params: { id } }: Params) => {
     void (async () => {
       const res = await fetch(`${ENV_ORIGIN}/api/menu/dessert?id=${id}`);
 
-      console.log(res, error, Boolean(error));
-
-      if (!res.ok || res.status !== 200) {
-        console.log(res.statusText);
+      if (!res.ok) {
+        setLoading(false)
         setError(res.statusText);
         return;
       }
@@ -28,17 +26,15 @@ const Desserts = ({ params: { id } }: Params) => {
       const menu = (await res.json()) as Menu;
       setMenu(menu);
 
-      console.log(menu);
-
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) return <LoadingSpinner />;
 
   if (error) return <p>{error}</p>;
 
-  console.log(menu);
   return (
     menu && (
       <div className="flex flex-col items-center justify-center md:h-[65vh] mb-8 mt-5 ">

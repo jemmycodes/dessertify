@@ -19,18 +19,20 @@ export const GET = async (request: Request) => {
     .single();
 
   if (error && error.code === "PGRST116") {
-    return Response.json( {
+    return new Response(JSON.stringify(error), {
       status: 404,
       statusText: "Item not found!",
     });
   }
 
   if (error) {
-    return Response.json( {
-      status: 400,
-      statusText: "An error occurred!",
-    });
+    return new Response(
+      JSON.stringify({
+        status: 400,
+        statusText: "An error occurred!",
+      })
+    );
   }
 
-  return Response.json(data, { status: 200 });
+  return new Response(JSON.stringify(data), { status: 200 });
 };
