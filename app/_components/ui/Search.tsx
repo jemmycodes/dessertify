@@ -1,21 +1,24 @@
 "use client";
 
 import { FaSearch } from "react-icons/fa";
+import type { Result } from "@/app/global";
 import { useState, useEffect } from "react";
 import SearchResult from "../SearchResults";
 import { usePathname } from "next/navigation";
-import { origin } from "@/app/menu/[slug]/page";
 import SearchResultPane from "../SearchResultPane";
+import { fetchData } from "@/app/_lib/helpers/utils";
 interface SearchProps {
   smHidden: boolean;
   search: string;
   onSearch: (input: string) => void;
 }
 
+
+
 const Search = ({ smHidden, search, onSearch }: SearchProps) => {
   const pathname = usePathname();
 
-  const [searchResults, setSearchResults] = useState<MenuTypes[] | null>([]);
+  const [searchResults, setSearchResults] = useState<Result[] | null>([]);
   const [status, setStatus] = useState<"loading" | "error" | "idle">("idle");
 
   useEffect(() => {
@@ -26,19 +29,17 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       void (async () => {
-        const res = await fetch(`${origin}/api/menu/search?query=${search}`);
-        
-        if (!res.ok) {
-          return setStatus("error");
+        try {
+          const results = await fetchData<Result>(
+            `/api/menu/search?query=${search}`
+          );
+          setStatus("idle");
+          setSearchResults(results);
+        } catch (error) {
+          setStatus("error");
         }
-
-        const data: MenuTypes[] = (await res.json()) as MenuTypes[];
-
-        setSearchResults(data);
-
-        setStatus("idle");
       })();
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timeout);
   }, [search]);
@@ -66,7 +67,7 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
         <SearchResultPane status={status}>
           {searchResults && searchResults.length ? (
             searchResults.map((result) => (
-              <SearchResult result={result} key={result._id} />
+              <SearchResult  {...result} key={result.id} />
             ))
           ) : (
             <p>

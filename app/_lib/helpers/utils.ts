@@ -1,70 +1,82 @@
-import { origin } from "@/app/menu/[slug]/page";
-import toast from "react-hot-toast";
+// import type { Cart } from "@/app/global";
+// import { origin } from "@/app/menu/[slug]/page";
+// import toast from "react-hot-toast";
 
-type DataTypes = CartType | MenuTypes;
+import { ENV_ORIGIN } from "./constants";
 
-export const checkIfItemExists = (id: string, array: CartType[]) => {
-  return array.findIndex((item) => item._id === id);
-};
+// export const checkIfItemExists = (id: string, array: Cart[]) => {
+//   return array.findIndex((item) => item.id === id);
+// };
 
-export const fetchData = async <T extends DataTypes>(
-  url: string,
-  slug: undefined | string = undefined
-): Promise<T[]> => {
-  const res = await fetch(`${origin}${url}`);
+// export const fetchData = async <T>(
+//   url: string,
+//   slug: undefined | string = undefined
+// ): Promise<T[]> => {
+//   const res = await fetch(`${origin}${url}`);
 
-  console.log(res, "res");
+//   console.log(res, "res");
 
-  if (!res.ok) {
-    throw new Error("An error occurred while fetching data");
-  }
+//   if (!res.ok) {
+//     throw new Error("An error occurred while fetching data");
+//   }
 
-  const data = (await res.json()) as T[];
+//   const data = (await res.json()) as T[];
 
+//   if (slug === undefined || slug === "all") return data;
 
-  if (slug === undefined || slug === "all") return data;
+//   if (slug !== "all") return data.filter((item) => item.category === slug);
 
-  if (slug !== "all") return data.filter((item) => item.category === slug);
+//   return data;
+// };
 
-  return data;
-};
+// export const insertData = async (url: string, data: CartRoute) => {
+//   const toastID = toast.loading("Adding to cart...");
 
-export const insertData = async (url: string, data: CartRoute) => {
-  const toastID = toast.loading("Adding to cart...");
+//   const res = await fetch(`${origin}${url}`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   });
 
-  const res = await fetch(`${origin}${url}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
+//   if (!res.ok) {
+//     toast.error("Could not update cart", { id: toastID });
+//     return;
+//   }
 
-  if (!res.ok) {
-    toast.error("Could not update cart", { id: toastID });
-    return;
-  }
+//   if (res.status === 200) {
+//     toast.dismiss(toastID);
+//     return "ok";
+//   }
+// };
 
-  if (res.status === 200) {
-    toast.dismiss(toastID);
-    return "ok";
-  }
-};
+// export const changeQuantity = (
+//   cart: Cart[],
+//   id: string,
+//   action: "REDUCE" | "ADD"
+// ) => {
+//   const itemIndex = checkIfItemExists(id, cart);
 
-export const changeQuantity = (
-  cart: CartType[],
-  id: string,
-  action: "REDUCE" | "ADD"
-) => {
-  const itemIndex = checkIfItemExists(id, cart);
+//   const item = cart[itemIndex];
 
-  const item = cart[itemIndex];
+//   if (item.quantity === 1) return;
 
-  if (item.quantity === 1) return;
+//   const newCart = [...cart];
 
-  const newCart = [...cart];
+//   item.quantity = action === "REDUCE" ? item.quantity - 1 : item.quantity + 1;
 
-  item.quantity = action === "REDUCE" ? item.quantity - 1 : item.quantity + 1;
+//   return newCart;
+// };
 
-  return newCart;
+export const fetchData = async <T >(url: string) => {
+  
+    const response = await fetch(`${ENV_ORIGIN}${url}`);
+    if (!response.ok) {
+      throw new Error("An error occurred, try again!");
+    }
+    const data = (await response.json()) as T[];
+
+    return data;
+  
 };

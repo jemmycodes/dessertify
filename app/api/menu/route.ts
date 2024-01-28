@@ -6,11 +6,9 @@ export async function GET() {
   if (error) {
     return Response.json(error, {
       status: 500,
-      statusText: "An Error Occurred",
+      statusText: `An Error Occurred, ${error.message}`,
     });
   }
 
-  console.log(data, error);
-
-  return Response.json(data, { status: 200 });
+  return Response.json(data, { status: 200, statusText: "success!" });
 }

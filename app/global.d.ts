@@ -1,3 +1,5 @@
+import { Tables } from "./_lib/types/supabase";
+
 declare module "*.jpeg" {
   const value: string;
   export default value;
@@ -7,46 +9,26 @@ declare module "*.webp" {
   export default value;
 }
 declare module "*.svg" {
-  const value: string;
-  export default value;
+    const value: string;
+    export default value;
 }
-
 declare module "*.png" {
   const value: string;
   export default value;
 }
 
-type MenuTypes = {
-  _id: string;
-  name: string;
+interface Result {
+  id: string;
   category: string;
-  photoUrl: string;
-  description: string;
-  slug: string;
-};
-
-interface CartRoute {
-  data: CartType;
-  table: string;
-}
-
-interface CartType {
-  id: number;
   name: string;
-  price: number;
-  quantity: number;
-  photoUrl: string;
-  category: string;
 }
 
-interface IntrinsicElements {
-  "l-dot-spinner": unknown;
-}
+type Menu = Tables<"menu">;
+
+type User = Tables<"users">;
+
+type Cart = Tables<"cart">;
 
 type Params = {
   params: Record<string, string>;
-};
-
-type Props = {
-  children: React.ReactNode;
 };

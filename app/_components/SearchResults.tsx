@@ -1,14 +1,16 @@
 import Link from "next/link";
+import type { Result } from "../global";
 
-const SearchResult = ({ result }: { result: MenuTypes }) => {
+
+
+const SearchResult = ({ id, category, name }: Result) => {
   return (
     <Link
-      href={`/menu/${result.category}/dessert/${result._id}`}
-      key={result._id}>
+      href={`/menu/${category}/dessert/${id}`}>
       <li className="hover:text-orange cursor-pointer ">
-        <span className="font-semibold"> {result.name}</span> in{" "}
+        <span className="font-semibold"> {name}</span> in{" "}
         <span className="font-semibold italic text-orange">
-          {result.category === "Ice_Cream" ? "Ice Cream" : result.category}
+          {category === "Ice_Cream" ? "Ice Cream" : category}
         </span>
       </li>
     </Link>

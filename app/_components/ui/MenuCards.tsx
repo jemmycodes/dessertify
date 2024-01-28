@@ -1,24 +1,16 @@
 "use client";
 
-import useCartStore from "@/app/_store/useCart";
+import type { Menu } from "@/app/global";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-const MenuCard = ({
-  name,
-  description,
-  photoUrl,
-  _id,
-  category,
-}: MenuTypes) => {
-  const { addToCart, loading } = useCartStore(({ addToCart, loading }) => ({
-    addToCart,
-    loading,
-  }));
+const MenuCard = ({ name, description, photoUrl, id }: Menu) => {
+  const { slug } = useParams();
+
   return (
     <Link
       className=" shadow-lg  bg-white rounded-md flex  justify-between"
-      // href={`${slug}/dessert/${_id}`}
-      href="">
+      href={`${slug}/dessert/${id}`}>
       <img
         src={photoUrl}
         loading="lazy"
@@ -32,16 +24,9 @@ const MenuCard = ({
         <p className="line-clamp-3 text-sm">{description}</p>
         <button
           className="bg-orange px-4 py-2 rounded-md text-white text-sm font-medium hover:brightness-95 duration-500 transition-all disabled:cursor-not-allowed disabled:bg-gray-300 "
-          disabled={loading}
+          // disabled={loading}
           onClick={(e) => {
             e.preventDefault();
-            void addToCart({
-              name,
-              price: 200,
-              photoUrl,
-              quantity: 1,
-              category,
-            });
           }}>
           Add to Cart
         </button>
