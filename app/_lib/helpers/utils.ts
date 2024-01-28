@@ -69,14 +69,28 @@ import { ENV_ORIGIN } from "./constants";
 //   return newCart;
 // };
 
-export const fetchData = async <T >(url: string) => {
-  
-    const response = await fetch(`${ENV_ORIGIN}${url}`);
-    if (!response.ok) {
-      throw new Error("An error occurred, try again!");
-    }
-    const data = (await response.json()) as T[];
+// export const fetchData = async <T >(url: string) => {
 
-    return data;
-  
+//     const response = await fetch(`${ENV_ORIGIN}${url}`);
+//     if (!response.ok) {
+//       throw new Error(response.statusText || "An error occurred while fetching data");
+//     }
+//     const data = (await response.json()) as T[];
+
+//     return data;
+
+// };
+
+export const fetchData = async <T>(url: string) => {
+  const response = await fetch(`${ENV_ORIGIN}${url}`);
+
+
+  if (!response.ok) {
+    throw new Error(
+      response.statusText || "An error occurred while fetching data"
+    );
+  }
+  const data = (await response.json()) as T[];
+
+  return data;
 };

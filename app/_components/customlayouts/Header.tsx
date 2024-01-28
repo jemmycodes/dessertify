@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Search from "../ui/Search";
+import Search from "../Search/Search";
 import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import { FaShoppingCart } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-
-// handle the e.target.value state
 
 const Header = () => {
   const pathname = usePathname();

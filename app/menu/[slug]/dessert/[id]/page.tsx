@@ -1,38 +1,44 @@
 "use client";
 
 import { FaPlus } from "react-icons/fa6";
+import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
 import LoadingSpinner from "../../loading";
 import { useEffect, useState } from "react";
+import type { Menu, Params } from "@/app/global";
 import { FaMinus, FaCartPlus } from "react-icons/fa";
-import { fetchMenuById } from "@/app/_lib/helpers/supabase";
+
 const Desserts = ({ params: { id } }: Params) => {
-  const [menu, setMenu] = useState<MenuTypes>();
-  const [quantity, setQuantity] = useState<number>(1);
-  const [status, setStatus] = useState<"loading" | "error" | "idle">("loading");
+  const [error, setError] = useState<string>("");
+  const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [menu, setMenu] = useState<Menu | null>(null);
 
   useEffect(() => {
     void (async () => {
-      const { data, error } = await fetchMenuById(id);
+      const res = await fetch(`${ENV_ORIGIN}/api/menu/dessert?id=${id}`);
 
-      error && setStatus("error");
+      console.log(res, error, Boolean(error));
 
-      if (data && data.length > 0) {
-        setMenu(data[0] as MenuTypes);
-        console.log(data[0]);
+      if (!res.ok || res.status !== 200) {
+        console.log(res.statusText);
+        setError(res.statusText);
+        return;
       }
+
+      const menu = (await res.json()) as Menu;
+      setMenu(menu);
+
+      console.log(menu);
+
+      setLoading(false);
     })();
+  }, []);
 
-    setStatus("idle");
-  }, [id]);
+  if (loading) return <LoadingSpinner />;
 
-  if (status !== "loading") {
-    console.log(status, "not loading, data should be here!");
-  }
+  if (error) return <p>{error}</p>;
 
-  if (status === "loading") <LoadingSpinner />;
-
-  if (status === "error") <p>An error occurred</p>;
-
+  console.log(menu);
   return (
     menu && (
       <div className="flex flex-col items-center justify-center md:h-[65vh] mb-8 mt-5 ">

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import Search from "../_components/ui/Search";
+import Search from "../_components/Search/Search";
 import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 import MenuNavigation from "../_components/customlayouts/MenuNavigation";
 

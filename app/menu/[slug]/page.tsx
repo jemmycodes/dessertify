@@ -1,4 +1,4 @@
-import MenuCard from "@/app/_components/ui/MenuCards";
+import MenuCard from "@/app/_components/menu/MenuCards";
 import { type Menu, type Params } from "@/app/global";
 import { fetchData } from "@/app/_lib/helpers/utils";
 

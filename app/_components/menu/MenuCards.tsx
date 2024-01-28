@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const MenuCard = ({ name, description, photoUrl, id }: Menu) => {
-  const { slug } = useParams();
+  const { slug } = useParams() ;
 
   return (
     <Link

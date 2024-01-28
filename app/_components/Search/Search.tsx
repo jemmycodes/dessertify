@@ -3,17 +3,15 @@
 import { FaSearch } from "react-icons/fa";
 import type { Result } from "@/app/global";
 import { useState, useEffect } from "react";
-import SearchResult from "../SearchResults";
+import SearchResult from "./SearchResults";
 import { usePathname } from "next/navigation";
-import SearchResultPane from "../SearchResultPane";
+import SearchResultPane from "./SearchResultPane";
 import { fetchData } from "@/app/_lib/helpers/utils";
 interface SearchProps {
   smHidden: boolean;
   search: string;
   onSearch: (input: string) => void;
 }
-
-
 
 const Search = ({ smHidden, search, onSearch }: SearchProps) => {
   const pathname = usePathname();
@@ -67,7 +65,7 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
         <SearchResultPane status={status}>
           {searchResults && searchResults.length ? (
             searchResults.map((result) => (
-              <SearchResult  {...result} key={result.id} />
+              <SearchResult {...result} key={result.id} />
             ))
           ) : (
             <p>

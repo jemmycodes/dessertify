@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Result } from "../global";
+import type { Result } from "../../global";
 
 
 

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
   if (error) {
     return Response.json(error, {
       status: 400,
-      statusText: "An error occurred!",
+      statusText: "An error occurred, try again!",
     });
   }
 
