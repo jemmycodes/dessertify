@@ -1,11 +1,11 @@
 "use client";
 
 import { FaPlus } from "react-icons/fa6";
-import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
 import LoadingSpinner from "../../loading";
 import { useEffect, useState } from "react";
 import type { Menu, Params } from "@/app/global";
 import { FaMinus, FaCartPlus } from "react-icons/fa";
+import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
 
 const Desserts = ({ params: { id } }: Params) => {
   const [error, setError] = useState<string>("");

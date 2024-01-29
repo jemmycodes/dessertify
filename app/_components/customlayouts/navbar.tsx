@@ -31,7 +31,7 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={pathname.includes("/menu") ? "active-link" : "nav-link"}
+            className={pathname.includes("/menu/all") ? "active-link" : "nav-link"}
             href="/menu">
             <MdOutlineRestaurantMenu />
           </Link>

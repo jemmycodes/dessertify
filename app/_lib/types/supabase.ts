@@ -11,24 +11,19 @@ export interface Database {
     Tables: {
       cart: {
         Row: {
-          category: string | null;
-          created_at: string;
           id: number;
-          name: string | null;
-          photoUrl: string | null;
-          price: number | null;
-          quantity: number | null;
-          user_id: string | null;
+          category: string;
+          name: string;
+          photoUrl: string;
+          price: number;
+          quantity: number;
         };
         Insert: {
-          category?: string | null;
-          created_at?: string;
-          id?: number;
-          name?: string;
-          photoUrl?: string;
-          price?: number;
-          quantity?: number;
-          user_id?: string | null;
+          category: string;
+          name: string;
+          photoUrl: string;
+          price: number;
+          quantity: number;
         };
         Update: {
           category?: string | null;
@@ -208,8 +203,9 @@ export type TablesUpdate<
   : never;
 
 export type Enums<
-  PublicEnumNameOrOptions extends // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-  keyof Database["public"]["Enums"] | { schema: keyof Database },
+  PublicEnumNameOrOptions extends  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+    | keyof Database["public"]["Enums"]
+    | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never

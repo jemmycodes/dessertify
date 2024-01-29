@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import SearchResult from "./SearchResults";
 import { usePathname } from "next/navigation";
 import SearchResultPane from "./SearchResultPane";
-import { fetchData } from "@/app/_lib/helpers/utils";
+import { fetchDataFromRoute } from "@/app/_lib/helpers/utils";
 interface SearchProps {
   smHidden: boolean;
   search: string;
@@ -28,7 +28,7 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
     const timeout = setTimeout(() => {
       void (async () => {
         try {
-          const results = await fetchData<Result>(
+          const results = await fetchDataFromRoute<Result>(
             `/api/menu/search?query=${search}`
           );
           setStatus("idle");

@@ -1,14 +1,46 @@
-// import type { Cart } from "@/app/global";
-// import { origin } from "@/app/menu/[slug]/page";
-// import toast from "react-hot-toast";
+"use server";
 
+import { cookies } from "next/headers";
 import { ENV_ORIGIN } from "./constants";
+import { createSupabaseServerComponent } from "../supabase/server/supabaseInstance";
+
+export const fetchDataFromRoute = async <T>(url: string) => {
+  const response = await fetch(`${ENV_ORIGIN}${url}`);
+
+  if (!response.ok) {
+    throw new Error(
+      response.statusText || "An error occurred while fetching data"
+    );
+  }
+  const data = (await response.json()) as T[];
+
+  return data;
+};
+
+export const fetchDataInServerComponents = async <T>(
+  table: string,
+  select: string
+) => {
+  const cookiesStore = cookies();
+  const supabase = createSupabaseServerComponent(cookiesStore);
+  const { data, error } = await supabase.from(table).select(select);
+
+  console.log("Response:", data, error);
+
+  if (error) {
+    console.log(error);
+    throw new Error("An error occurred");
+  }
+
+  console.log(data);
+  return data as T[];
+};
 
 // export const checkIfItemExists = (id: string, array: Cart[]) => {
 //   return array.findIndex((item) => item.id === id);
 // };
 
-// export const fetchData = async <T>(
+// export const fetchDataFromRoute = async <T>(
 //   url: string,
 //   slug: undefined | string = undefined
 // ): Promise<T[]> => {
@@ -69,7 +101,7 @@ import { ENV_ORIGIN } from "./constants";
 //   return newCart;
 // };
 
-// export const fetchData = async <T >(url: string) => {
+// export const fetchDataFromRoute = async <T >(url: string) => {
 
 //     const response = await fetch(`${ENV_ORIGIN}${url}`);
 //     if (!response.ok) {
@@ -78,19 +110,3 @@ import { ENV_ORIGIN } from "./constants";
 //     const data = (await response.json()) as T[];
 
 //     return data;
-
-// };
-
-export const fetchData = async <T>(url: string) => {
-  const response = await fetch(`${ENV_ORIGIN}${url}`);
-
-
-  if (!response.ok) {
-    throw new Error(
-      response.statusText || "An error occurred while fetching data"
-    );
-  }
-  const data = (await response.json()) as T[];
-
-  return data;
-};

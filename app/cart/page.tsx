@@ -1,12 +1,14 @@
-"use client";
-
+import type { Cart } from "../global";
 import Checkout from "../_components/cart/Checkout";
-import { CartTable } from "../_components/cart/CartTable";
+import CartTable from "../_components/cart/CartTable";
+import { fetchDataInServerComponents } from "../_lib/helpers/utils";
 
-const cart: [] = []
+const Cart = async () => {
+  const cart = await fetchDataInServerComponents<Cart>(
+    "cart",
+    "id, name, price, category, photoUrl, quantity"
+  );
 
-const Cart = () => {
- 
   return (
     <>
       <CartTable cart={cart} />

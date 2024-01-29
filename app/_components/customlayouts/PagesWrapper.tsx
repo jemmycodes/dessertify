@@ -1,4 +1,4 @@
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 import Header from "./Header";
 
 const PagesWrapper = ({ children }: Props) => {

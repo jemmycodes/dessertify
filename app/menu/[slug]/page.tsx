@@ -1,11 +1,10 @@
 import MenuCard from "@/app/_components/menu/MenuCards";
 import { type Menu, type Params } from "@/app/global";
-import { fetchData } from "@/app/_lib/helpers/utils";
+import {  fetchDataFromRoute } from "@/app/_lib/helpers/utils";
 
 const MenuItems = async ({ params: { slug } }: Params) => {
-  const menu = await fetchData<Menu>("/api/menu");
+  const menu = await fetchDataFromRoute<Menu>("/api/menu");
 
-  console.log(menu);
 
   return (
     <>
