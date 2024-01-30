@@ -29,6 +29,7 @@ type User = Tables<"users">;
 
 type Cart = Tables<"cart">;
 
+
 type Params = {
   params: Record<string, string>;
 };

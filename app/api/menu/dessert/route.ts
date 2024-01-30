@@ -1,11 +1,13 @@
-import { supabase } from "@/app/_lib/supabase/client/supabaseInstance";
 import type { Menu } from "@/app/global";
 import type { PostgrestError } from "@supabase/supabase-js";
+import { createSupabaseBrowserClient } from "@/app/_lib/supabase/client";
 
 interface SupabaseResponse {
   data: Menu | null;
   error: PostgrestError | null;
 }
+
+const supabase = createSupabaseBrowserClient();
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);

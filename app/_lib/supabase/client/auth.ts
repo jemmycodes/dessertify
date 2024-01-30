@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { type LoginUser } from "../../../auth/login/page";
 import { type CreateUser } from "../../../auth/signup/page";
-import { createSupabaseBrowserClient } from "./supabaseInstance";
+import { createSupabaseBrowserClient } from "./index";
 
 const supabaseClient = createSupabaseBrowserClient();
 

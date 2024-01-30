@@ -3,10 +3,13 @@
 import { FaPlus } from "react-icons/fa6";
 import LoadingSpinner from "../../loading";
 import { useEffect, useState } from "react";
-import type { Menu, Params } from "@/app/global";
+import toast from "react-hot-toast";
 import { FaMinus, FaCartPlus } from "react-icons/fa";
+import type { Menu, Params, Cart } from "@/app/global";
 import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
+import { addItem } from "@/app/_lib/supabase/client/database";
 
+type InsertCart = Omit<Cart, "id">;
 const Desserts = ({ params: { id } }: Params) => {
   const [error, setError] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
@@ -18,7 +21,7 @@ const Desserts = ({ params: { id } }: Params) => {
       const res = await fetch(`${ENV_ORIGIN}/api/menu/dessert?id=${id}`);
 
       if (!res.ok) {
-        setLoading(false)
+        setLoading(false);
         setError(res.statusText);
         return;
       }
@@ -34,6 +37,27 @@ const Desserts = ({ params: { id } }: Params) => {
   if (loading) return <LoadingSpinner />;
 
   if (error) return <p>{error}</p>;
+
+  const addItemToCart = async () => {
+    if (menu === null) return;
+
+    setLoading(true);
+    const toastID = toast.loading(`Adding ${menu.name} to cart`);
+
+    const error = await addItem<InsertCart>("cart", {
+      name: menu.name,
+      photoUrl: menu.photoUrl,
+      category: menu.category,
+      price: 400,
+      quantity: 1,
+    });
+
+    if (error) {
+      return toast.error(`Cannot add ${menu.name} to cart`, { id: toastID });
+    }
+
+    toast.success(`Added ${menu.name} to cart`, { id: toastID });
+  };
 
   return (
     menu && (
@@ -85,7 +109,12 @@ const Desserts = ({ params: { id } }: Params) => {
                   }}
                 />
               </span>
-              <button className="bg-orange text-white px-4 py-2 w-full rounded font-medium flex gap-3 items-center justify-center">
+              <button
+                className="bg-orange text-white px-4 py-2 w-full rounded font-medium flex gap-3 items-center justify-center"
+                onClick={async (e)=> {
+                  e.preventDefault()
+               await   addItemToCart() 
+                }}>
                 <FaCartPlus /> Add to Cart
               </button>
             </div>

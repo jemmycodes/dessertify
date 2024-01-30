@@ -1,7 +1,7 @@
 import type { Cart } from "../global";
 import Checkout from "../_components/cart/Checkout";
 import CartTable from "../_components/cart/CartTable";
-import { fetchDataInServerComponents } from "../_lib/helpers/utils";
+import { fetchDataInServerComponents } from "../_lib/supabase/server/databaseRequests";
 
 const Cart = async () => {
   const cart = await fetchDataInServerComponents<Cart>(

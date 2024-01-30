@@ -1,6 +1,11 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
+// eslint-disable
+
 import { cookies } from "next/headers";
 import { type Database } from "../../types/supabase";
+import {
+  createServerClient,
+  type CookieOptions,
+} from "@supabase/ssr";
 
 export const createSupabaseServerClient = () => {
   const cookieStore = cookies();
@@ -14,10 +19,12 @@ export const createSupabaseServerClient = () => {
           return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
+          // eslint-disable-next-line
           cookieStore.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
-          cookieStore.set({ name, value: "", ...options });
+          // eslint-disable-next-line
+          cookieStore.set({ name, value: "", ...options }) as any;
         },
       },
     }
