@@ -1,68 +1,58 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { FaPlus } from "react-icons/fa6";
-import LoadingSpinner from "../../loading";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { FaMinus, FaCartPlus } from "react-icons/fa";
 import type { Menu, Params, Cart } from "@/app/global";
+import useSendToDb from "@/app/_lib/hooks/useSendToDb";
 import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
-import { addItem } from "@/app/_lib/supabase/client/database";
+import { createItem } from "@/app/_lib/helpers/utils";
 
 type InsertCart = Omit<Cart, "id">;
+
+interface MenuProps extends Menu {
+  quantity: number;
+  price: number;
+}
 const Desserts = ({ params: { id } }: Params) => {
-  const [error, setError] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState<string>("");
+  const [menu, setMenu] = useState<MenuProps>({} as MenuProps);
   const [loading, setLoading] = useState(true);
-  const [menu, setMenu] = useState<Menu | null>(null);
+
+  const { loading: sending, sendToDb } = useSendToDb<InsertCart>(
+    "cart",
+    createItem(menu),
+    {
+      loading: `Adding ${menu?.name} to cart...`,
+      success: `Added ${menu?.name} to cart!`,
+      error: `Error adding ${menu?.name} to cart`,
+    }
+  );
 
   useEffect(() => {
     void (async () => {
       const res = await fetch(`${ENV_ORIGIN}/api/menu/dessert?id=${id}`);
 
       if (!res.ok) {
-        setLoading(false);
         setError(res.statusText);
         return;
       }
 
       const menu = (await res.json()) as Menu;
       setMenu(menu);
-
-      setLoading(false);
     })();
+    setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading) return <LoadingSpinner />;
-
   if (error) return <p>{error}</p>;
 
-  const addItemToCart = async () => {
-    if (menu === null) return;
-
-    setLoading(true);
-    const toastID = toast.loading(`Adding ${menu.name} to cart`);
-
-    const error = await addItem<InsertCart>("cart", {
-      name: menu.name,
-      photoUrl: menu.photoUrl,
-      category: menu.category,
-      price: 400,
-      quantity: 1,
-    });
-
-    if (error) {
-      return toast.error(`Cannot add ${menu.name} to cart`, { id: toastID });
-    }
-
-    toast.success(`Added ${menu.name} to cart`, { id: toastID });
-  };
-
   return (
-    menu && (
+    menu.length > 0 && (
       <div className="flex flex-col items-center justify-center md:h-[65vh] mb-8 mt-5 ">
-        <section className="flex flex-col md:flex-row gap-5 ">
+        <section className="flex flex-col md:flex-row gap-5 mb-20">
           <img
             src={menu.photoUrl}
             loading="lazy"
@@ -88,34 +78,44 @@ const Desserts = ({ params: { id } }: Params) => {
             <div className="flex flex-col md:flex-row gap-3">
               <span className=" flex items-center gap-3 w-full justify-between bg-gray-200 rounded-md p-2 font-bold">
                 <FaPlus
-                  className="w-full text-orange"
+                  className={
+                    sending
+                      ? " w-full text-white cursor-wait"
+                      : "w-full text-orange cursor-pointer"
+                  }
                   onClick={() => {
-                    setQuantity((prev) => prev + 1);
+                    !sending && setQuantity((prev) => prev + 1);
                   }}
                 />
                 <input
                   type="text"
+                  disabled={sending}
                   className="text-black w-full text-center bg-transparent"
                   value={quantity}
                   onChange={(e) => {
-                    setQuantity(+e.target.value);
+                    !loading && setQuantity(+e.target.value);
                   }}
                 />
                 <FaMinus
-                  className="w-full text-orange cursor-pointer"
+                  className={
+                    sending
+                      ? " w-full text-white cursor-wait"
+                      : "w-full text-orange cursor-pointer"
+                  }
                   onClick={() => {
-                    if (quantity <= 1) return;
+                    if (sending || quantity <= 1) return;
+
                     setQuantity((prev) => prev - 1);
                   }}
                 />
               </span>
               <button
-                className="bg-orange text-white px-4 py-2 w-full rounded font-medium flex gap-3 items-center justify-center"
-                onClick={async (e)=> {
-                  e.preventDefault()
-               await   addItemToCart() 
-                }}>
-                <FaCartPlus /> Add to Cart
+                className="bg-orange text-white px-4 py-2 w-full rounded font-medium flex gap-3 items-center justify-center disabled:bg-gray-400 "
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+                disabled={sending}>
+                <FaCartPlus /> {loading ? "Adding to cart..." : "Add to cart"}
               </button>
             </div>
           </article>

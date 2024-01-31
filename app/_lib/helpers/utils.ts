@@ -1,5 +1,3 @@
-"use server";
-
 import { ENV_ORIGIN } from "./constants";
 
 export const fetchDataFromRoute = async <T>(url: string) => {
@@ -15,4 +13,19 @@ export const fetchDataFromRoute = async <T>(url: string) => {
   return data;
 };
 
+interface Item {
+  id?: string;
+  name: string;
+  price: number;
+  photoUrl: string;
+  category: string;
+  quantity?: number;
+  description?: string;
+}
 
+export const createItem = <T extends Item>(item: T) => ({
+  name: item.name,
+  category: item.category,
+  price: item.price,
+  photoUrl: item.photoUrl,
+});

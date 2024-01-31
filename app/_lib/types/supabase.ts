@@ -48,11 +48,11 @@ export interface Database {
       menu: {
         Row: {
           id: string;
-          category: string;
-          description: string;
           name: string;
-          photoAttribute: string;
+          category: string;
           photoUrl: string;
+          description: string;
+          photoAttribute: string;
         };
         Insert: {
           id: string;
