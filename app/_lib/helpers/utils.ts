@@ -14,18 +14,25 @@ export const fetchDataFromRoute = async <T>(url: string) => {
 };
 
 interface Item {
-  id?: string;
+ 
   name: string;
   price: number;
   photoUrl: string;
   category: string;
-  quantity?: number;
-  description?: string;
+  quantity: number;
+  description: string;
 }
 
-export const createItem = <T extends Item>(item: T) => ({
-  name: item.name,
-  category: item.category,
-  price: item.price,
-  photoUrl: item.photoUrl,
+export const createItem = <T extends Item>(item: T ) => ({
+  name: item?.name,
+  category: item?.category,
+  price: item?.price,
+  photoUrl: item?.photoUrl,
+  quantity: item?.quantity,
+});
+
+export const asyncState = (name: string | undefined) => ({
+  loading: `Adding ${name} to cart...`,
+  success: `Added ${name} to cart!`,
+  error: `Error adding ${name} to cart`,
 });

@@ -49,6 +49,8 @@ export interface Database {
         Row: {
           id: string;
           name: string;
+          price: number;
+          quantity: number;
           category: string;
           photoUrl: string;
           description: string;

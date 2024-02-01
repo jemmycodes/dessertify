@@ -1,5 +1,7 @@
-import { supabase } from "@/app/_lib/supabase/client/supabaseInstance";
+import { createSupabaseBrowserClient } from '@/app/_lib/supabase/client';
 
+
+const supabase = createSupabaseBrowserClient();
 export async function GET() {
   const { data, error } = await supabase.from("menu").select("*");
 

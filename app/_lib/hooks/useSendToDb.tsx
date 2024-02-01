@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { createSupabaseBrowserClient } from "@/app/_lib/supabase/client";
 
@@ -11,20 +11,24 @@ interface Message {
 }
 
 const useSendToDb = <T,>(table: string, item: T, message: Message) => {
-    const [loading, setLoading] = useState(true);
-    
-    const sendToDb = async () => {
-      const toastID = toast.loading(message.loading);
-      const { error } = await supabase.from(table).insert(item);
+  const [loading, setLoading] = useState(false);
 
-      if (error) {
-        toast.error(message.error, { id: toastID });
-        return;
-      }
+  const sendToDb = async () => {
+    setLoading(true);
+    const toastID = toast.loading(message.loading);
+    const { error } = await supabase
+      .from(table)
+      .upsert(item, { onConflict: "id" });
 
+    if (error) {
+      toast.error(message.error, { id: toastID });
       setLoading(false);
-      toast.success(message.success, { id: toastID });
-    };
+      return;
+    }
+
+    toast.success(message.success, { id: toastID });
+    setLoading(false);
+  };
 
   return { loading, sendToDb };
 };
