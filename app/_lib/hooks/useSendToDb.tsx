@@ -7,7 +7,7 @@ const supabase = createSupabaseBrowserClient();
 interface Message {
   loading: string;
   success: string;
-  error: string;
+  // error: string;
 }
 
 const useSendToDb = <T,>(table: string, item: T, message: Message) => {
