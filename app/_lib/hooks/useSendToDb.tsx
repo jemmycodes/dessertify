@@ -7,20 +7,24 @@ const supabase = createSupabaseBrowserClient();
 interface Message {
   loading: string;
   success: string;
-  // error: string;
+  error: string;
 }
 
-const useSendToDb = <T,>(table: string, item: T, message: Message) => {
+const useSendToDb = <T,>(
+  table: string,
+  item: T,
+  message: Message,
+  onConflict: string
+) => {
   const [loading, setLoading] = useState(false);
 
   const sendToDb = async () => {
     setLoading(true);
     const toastID = toast.loading(message.loading);
-    const { error } = await supabase
-      .from(table)
-      .upsert(item, { onConflict: "id" });
+    const { error } = await supabase.from(table).upsert(item, { onConflict });
 
     if (error) {
+      console.log(error);
       toast.error(message.error, { id: toastID });
       setLoading(false);
       return;

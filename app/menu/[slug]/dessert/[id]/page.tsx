@@ -19,8 +19,6 @@ const Desserts = ({ params: { id } }: Params) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    console.log("useEffect running")
     void (async () => {
       const res = await fetch(`${ENV_ORIGIN}/api/menu/dessert?id=${id}`);
 
@@ -39,9 +37,10 @@ const Desserts = ({ params: { id } }: Params) => {
   const { loading: sending, sendToDb } = useSendToDb<InsertCart>(
     "cart",
     createItem(menu as Menu),
-    asyncState(menu?.name )
+    asyncState(menu?.name),
+    "user_id, product_id"
   );
-if (loading) return <Loading/>
+  if (loading) return <Loading />;
 
   if (error || !menu) return <p>{error}</p>;
 

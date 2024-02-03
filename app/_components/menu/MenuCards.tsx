@@ -13,8 +13,16 @@ const MenuCard = ({ name, description, photoUrl, id, category }: Menu) => {
 
   const { loading, sendToDb } = useSendToDb<InsertCart>(
     "cart",
-    { name, quantity: 2, price: 200, photoUrl, category },
-    asyncState(name)
+    {
+      name,
+      quantity: 2,
+      price: 200,
+      photoUrl,
+      category,
+      product_id: id,
+    },
+    asyncState(name),
+    "user_id, product_id"
   );
 
   return (

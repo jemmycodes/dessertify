@@ -1,140 +1,149 @@
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 export type Json =
   | string
   | number
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[];
+  | Json[]
 
 export interface Database {
   public: {
     Tables: {
       cart: {
         Row: {
-          id: number;
-          category: string;
-          name: string;
-          photoUrl: string;
-          price: number;
-          quantity: number;
-        };
+          category: string
+          id: number
+          name: string
+          photoUrl: string
+          price: number
+          product_id: string | null
+          quantity: number
+        }
         Insert: {
-          category: string;
-          name: string;
-          photoUrl: string;
-          price: number;
-          quantity: number;
-        };
+          category: string
+          name: string
+          photoUrl: string
+          price: number
+          product_id: string | null
+          quantity: number
+        }
         Update: {
-          category?: string | null;
-          created_at?: string;
-          id?: number;
-          name?: string | null;
-          photoUrl?: string | null;
-          price?: number | null;
-          quantity?: number | null;
-          user_id?: string | null;
-        };
+          // category?: string
+          // created_at?: string
+          // id?: number
+          // name?: string
+          // photoUrl?: string
+          // price?: number
+          // product_id?: string | null
+          quantity?: number
+          // user_id?: string
+        }
         Relationships: [
           {
-            foreignKeyName: "cart_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            foreignKeyName: "cart_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "menu"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cart_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
-        ];
-      };
+        ]
+      }
       menu: {
         Row: {
-          id: string;
-          name: string;
-          price: number;
-          quantity: number;
-          category: string;
-          photoUrl: string;
-          description: string;
-          photoAttribute: string;
-        };
+          category: string
+          description: string
+          id: string
+          name: string
+          photoAttribute: string | null
+          photoUrl: string
+        }
         Insert: {
-          id: string;
-          category?: string | null;
-          description?: string | null;
-          name?: string | null;
-          photoAttribute?: string | null;
-          photoUrl?: string | null;
-        };
+          category: string
+          description: string
+          id: string
+          name: string
+          photoAttribute?: string | null
+          photoUrl: string
+        }
         Update: {
-          id?: string;
-          category?: string | null;
-          description?: string | null;
-          name?: string | null;
-          photoAttribute?: string | null;
-          photoUrl?: string | null;
-        };
-        Relationships: [];
-      };
+          category?: string
+          description?: string
+          id?: string
+          name?: string
+          photoAttribute?: string | null
+          photoUrl?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
-          avatar_url: string | null;
-          created_at: string | null;
-          email: string;
-          firstname: string;
-          house_address: string | null;
-          id: number;
-          lastname: string;
-          location: string | null;
-          phone_number: string | null;
-          user_id: string | null;
-        };
+          avatar_url: string | null
+          created_at: string | null
+          email: string
+          firstname: string
+          house_address: string | null
+          id: number
+          lastname: string
+          location: string | null
+          phone_number: string | null
+          user_id: string | null
+        }
         Insert: {
-          avatar_url?: string | null;
-          created_at?: string | null;
-          email: string;
-          firstname?: string;
-          house_address?: string | null;
-          id?: number;
-          lastname?: string;
-          location?: string | null;
-          phone_number?: string | null;
-          user_id?: string | null;
-        };
+          avatar_url?: string | null
+          created_at?: string | null
+          email: string
+          firstname?: string
+          house_address?: string | null
+          id?: number
+          lastname?: string
+          location?: string | null
+          phone_number?: string | null
+          user_id?: string | null
+        }
         Update: {
-          avatar_url?: string | null;
-          created_at?: string | null;
-          email?: string;
-          firstname?: string;
-          house_address?: string | null;
-          id?: number;
-          lastname?: string;
-          location?: string | null;
-          phone_number?: string | null;
-          user_id?: string | null;
-        };
+          avatar_url?: string | null
+          created_at?: string | null
+          email?: string
+          firstname?: string
+          house_address?: string | null
+          id?: number
+          lastname?: string
+          location?: string | null
+          phone_number?: string | null
+          user_id?: string | null
+        }
         Relationships: [
           {
-            foreignKeyName: "profiles_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "users";
-            referencedColumns: ["id"];
+            foreignKeyName: "profiles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           }
-        ];
-      };
-    };
+        ]
+      }
+    }
     Views: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Functions: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     Enums: {
-      [_ in never]: never;
-    };
+      [_ in never]: never
+    }
     CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
+      [_ in never]: never
+    }
+  }
 }
 
 export type Tables<
@@ -148,7 +157,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
@@ -156,11 +165,11 @@ export type Tables<
       Database["public"]["Views"])
   ? (Database["public"]["Tables"] &
       Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R;
+      Row: infer R
     }
     ? R
     : never
-  : never;
+  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -171,17 +180,17 @@ export type TablesInsert<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I;
+      Insert: infer I
     }
     ? I
     : never
-  : never;
+  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -192,20 +201,20 @@ export type TablesUpdate<
     : never = never
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
   ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U;
+      Update: infer U
     }
     ? U
     : never
-  : never;
+  : never
 
 export type Enums<
-  PublicEnumNameOrOptions extends  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
+  PublicEnumNameOrOptions extends
     | keyof Database["public"]["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
@@ -215,4 +224,4 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never;
+  : never

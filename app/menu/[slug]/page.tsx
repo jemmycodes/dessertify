@@ -5,6 +5,8 @@ import { fetchDataFromRoute } from "@/app/_lib/helpers/utils";
 const MenuItems = async ({ params: { slug } }: Params) => {
   const menu = await fetchDataFromRoute<Menu>("/api/menu");
 
+  if (!menu.length) return;
+
   return (
     <>
       <section className="flex flex-col gap-5 min-[700px]:grid min-[700px]:grid-cols-menu-cards-layout my-3">
