@@ -4,26 +4,27 @@ import Link from "next/link";
 import type { Cart, Menu } from "@/app/global";
 import { useParams } from "next/navigation";
 import useSendToDb from "@/app/_lib/hooks/useSendToDb";
-import { asyncState } from "@/app/_lib/helpers/utils";
+import { asyncState, generatePriceWithDiscount } from "@/app/_lib/helpers/utils";
 
 type InsertCart = Omit<Cart, "id">;
 
 const MenuCard = ({ name, description, photoUrl, id, category }: Menu) => {
   const { slug } = useParams();
+  const {price} = generatePriceWithDiscount()
 
   const { loading, sendToDb } = useSendToDb<InsertCart>(
     "cart",
     {
       name,
-      quantity: 2,
-      price: 200,
+      quantity: 1,
+      price,
       photoUrl,
       category,
       product_id: id,
     },
-    asyncState(name),
-    "user_id, product_id"
+    asyncState(name)
   );
+
 
   return (
     <div className=" shadow-lg  bg-white rounded-md flex  justify-between">

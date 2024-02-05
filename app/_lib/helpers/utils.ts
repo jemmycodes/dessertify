@@ -14,21 +14,22 @@ export const fetchDataFromRoute = async <T>(url: string) => {
 };
 
 interface Item {
- 
   name: string;
   price: number;
   photoUrl: string;
   category: string;
   quantity: number;
   description: string;
+  id: string;
 }
 
-export const createItem = <T extends Item>(item: T ) => ({
+export const createItem = <T extends Item>(item: T) => ({
   name: item?.name,
   category: item?.category,
   price: item?.price,
   photoUrl: item?.photoUrl,
   quantity: item?.quantity,
+  product_id: item?.id,
 });
 
 export const asyncState = (name: string | undefined) => ({
@@ -36,3 +37,24 @@ export const asyncState = (name: string | undefined) => ({
   success: `Added ${name} to cart!`,
   error: `Error adding ${name} to cart`,
 });
+
+export const generatePriceWithDiscount = () => {
+  const minPrice = 10;
+  const maxPrice = 50;
+  const minDiscount = 5;
+  const maxDiscount = 25;
+
+  const price = Math.random() * (maxPrice - minPrice) + minPrice;
+
+  const discount = Math.floor(
+    Math.random() * (maxDiscount - minDiscount + 1) + minDiscount
+  );
+
+  const discountedPrice = price * (1 - discount / 100);
+
+  return {
+    price: Number(price.toFixed(2)),
+    discount: discount + "%",
+    discountedPrice: Number(discountedPrice.toFixed(2)),
+  };
+};

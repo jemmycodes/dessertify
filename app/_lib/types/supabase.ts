@@ -17,7 +17,7 @@ export interface Database {
           name: string
           photoUrl: string
           price: number
-          product_id: string | null
+          product_id: string 
           quantity: number
         }
         Insert: {
@@ -64,6 +64,9 @@ export interface Database {
           name: string
           photoAttribute: string | null
           photoUrl: string
+          product_id: string
+          quantity: number
+          price: number
         }
         Insert: {
           category: string

@@ -2,10 +2,11 @@ import { TiPlus } from "react-icons/ti";
 import { TiMinus } from "react-icons/ti";
 import type { Cart } from "@/app/global";
 
-const CartItems = ({ photoUrl, name, category, id, quantity }: Cart) => {
+const CartItems = ({ photoUrl, name, category, id, quantity, price }: Cart) => {
   console.log(id);
   return (
     <li className="grid grid-cols-7 gap-3 border-b pb-4">
+     
       <img
         src={photoUrl}
         width={70}
@@ -30,8 +31,8 @@ const CartItems = ({ photoUrl, name, category, id, quantity }: Cart) => {
           <TiMinus />
         </span>
       </div>
-      <p className="font-bold">{200.0}</p>
-      <p className="font-bold">{300}</p>
+      <p className="font-bold  text-sm">${ price}</p>
+      <p className="font-bold text-sm">${price * quantity}</p>
     </li>
   );
 };

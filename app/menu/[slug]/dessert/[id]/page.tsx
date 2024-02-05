@@ -7,16 +7,21 @@ import { FaMinus, FaCartPlus } from "react-icons/fa";
 import type { Menu, Params, Cart } from "@/app/global";
 import useSendToDb from "@/app/_lib/hooks/useSendToDb";
 import { ENV_ORIGIN } from "@/app/_lib/helpers/constants";
-import { asyncState, createItem } from "@/app/_lib/helpers/utils";
+import {
+  asyncState,
+  createItem,
+  generatePriceWithDiscount,
+} from "@/app/_lib/helpers/utils";
 import Loading from "../loading";
 
 type InsertCart = Omit<Cart, "id">;
-
 const Desserts = ({ params: { id } }: Params) => {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState<string>("");
   const [menu, setMenu] = useState<Menu | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const { price, discount, discountedPrice } = generatePriceWithDiscount();
 
   useEffect(() => {
     void (async () => {
@@ -27,8 +32,15 @@ const Desserts = ({ params: { id } }: Params) => {
         return;
       }
 
-      const menu = (await res.json()) as Menu;
+      const data = (await res.json()) as Menu;
+
+      const menu = {
+        ...data,
+        product_id: data.id,
+        quantity: 1,
+      };
       setMenu(menu);
+      console.log(menu);
     })();
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,8 +49,7 @@ const Desserts = ({ params: { id } }: Params) => {
   const { loading: sending, sendToDb } = useSendToDb<InsertCart>(
     "cart",
     createItem(menu as Menu),
-    asyncState(menu?.name),
-    "user_id, product_id"
+    asyncState(menu?.name)
   );
   if (loading) return <Loading />;
 
@@ -62,12 +73,12 @@ const Desserts = ({ params: { id } }: Params) => {
           <p className="text-sm leading-5">{menu.description}</p>
           <div className="flex justify-between gap-4">
             <span className="flex gap-5 items-center font-semi-bold text-sm bg-">
-              <p className=" font-bold text-2xl ">$125.00</p>
+              <p className=" font-bold text-2xl ">${discountedPrice}</p>
               <p className="bg-orange/10 text-orange font-semibold py-1 px-3">
-                50%
+                {discount}
               </p>
             </span>
-            <del className="font-bold text-gray-300">$250.00</del>
+            <del className="font-bold text-gray-300">${price}</del>
           </div>
           <div className="flex flex-col md:flex-row gap-3">
             <span className=" flex items-center gap-3 w-full justify-between bg-gray-200 rounded-md p-2 font-bold">
