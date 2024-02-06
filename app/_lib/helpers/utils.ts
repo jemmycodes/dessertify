@@ -1,4 +1,15 @@
 import { ENV_ORIGIN } from "./constants";
+import { createSupabaseBrowserClient } from "../supabase/client";
+import toast from "react-hot-toast";
+import type { Cart } from "@/app/global";
+import type { PostgrestError } from "@supabase/supabase-js";
+
+interface Data {
+  data: Cart | null;
+  error: PostgrestError | null;
+}
+
+const supabase = createSupabaseBrowserClient();
 
 export const fetchDataFromRoute = async <T>(url: string) => {
   const response = await fetch(`${ENV_ORIGIN}${url}`);
@@ -57,4 +68,23 @@ export const generatePriceWithDiscount = () => {
     discount: discount + "%",
     discountedPrice: Number(discountedPrice.toFixed(2)),
   };
+};
+
+export const itemInDb = async (
+  message: string,
+  table: string,
+  filter: Record<string, string>
+) => {
+  const { data, error }: Data = await supabase
+    .from(table)
+    .select("*")
+    .eq(filter.name, filter.value)
+    .maybeSingle();
+
+  if (error) {
+    toast.error(message);
+    return { error, data: null };
+  }
+
+  return { error: null, data };
 };

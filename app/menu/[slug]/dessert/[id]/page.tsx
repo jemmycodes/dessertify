@@ -2,7 +2,7 @@
 "use client";
 
 import { FaPlus } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaMinus, FaCartPlus } from "react-icons/fa";
 import type { Menu, Params, Cart } from "@/app/global";
 import useSendToDb from "@/app/_lib/hooks/useSendToDb";
@@ -21,7 +21,10 @@ const Desserts = ({ params: { id } }: Params) => {
   const [menu, setMenu] = useState<Menu | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { price, discount, discountedPrice } = generatePriceWithDiscount();
+  const { price, discount, discountedPrice } = useMemo(
+    () => generatePriceWithDiscount(),
+    []
+  );
 
   useEffect(() => {
     void (async () => {
@@ -34,13 +37,7 @@ const Desserts = ({ params: { id } }: Params) => {
 
       const data = (await res.json()) as Menu;
 
-      const menu = {
-        ...data,
-        product_id: data.id,
-        quantity: 1,
-      };
-      setMenu(menu);
-      console.log(menu);
+      setMenu(data);
     })();
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +45,7 @@ const Desserts = ({ params: { id } }: Params) => {
 
   const { loading: sending, sendToDb } = useSendToDb<InsertCart>(
     "cart",
-    createItem(menu as Menu),
+    createItem({ ...menu, product_id: menu?.product_id, quantity } as Menu),
     asyncState(menu?.name)
   );
   if (loading) return <Loading />;

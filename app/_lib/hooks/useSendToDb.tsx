@@ -1,12 +1,11 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import type { Cart } from "@/app/global";
-import type { PostgrestError } from "@supabase/supabase-js";
 import { createSupabaseBrowserClient } from "@/app/_lib/supabase/client";
+import { itemInDb } from "../helpers/utils";
 
 const supabase = createSupabaseBrowserClient();
 
-interface Message {
+export interface Message {
   loading: string;
   success: string;
   error: string;
@@ -15,11 +14,6 @@ interface Message {
 interface CartItem {
   quantity: number;
   product_id: string;
-}
-
-interface Data {
-  data: Cart | null;
-  error: PostgrestError | null;
 }
 
 const useSendToDb = <T extends CartItem>(
@@ -33,19 +27,18 @@ const useSendToDb = <T extends CartItem>(
     const toastID = toast.loading(message.loading);
     setLoading(true);
 
-    const { data: cartItem, error }: Data = await supabase
-      .from(table)
-      .select("*")
-      .eq("product_id", item.product_id)
-      .maybeSingle();
+    const { error, data: cartItem } = await itemInDb(message.error, "cart", {
+      name: "product_id",
+      value: item.product_id,
+    });
 
-    if (error) {
-      console.log(error);
-      toast.error(message.error, { id: toastID });
-      setLoading(false);
+    // const { data: cartItem, error }: Data = await supabase
+    //   .from(table)
+    //   .select("*")
+    //   .eq("product_id", item.product_id)
+    //   .maybeSingle();
 
-      return;
-    }
+    if (error) return;
 
     if (cartItem) {
       const { product_id, quantity } = cartItem;
