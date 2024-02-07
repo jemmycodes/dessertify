@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { TiPlus } from "react-icons/ti";
@@ -11,6 +12,9 @@ const CartItems = ({ photoUrl, name, category, id, quantity, price }: Cart) => {
     success: ` Removed ${name}  from cart!`,
     error: `Error removing ${name} from cart!`,
   });
+
+
+  
   return (
     <li className="grid grid-cols-7 gap-3 border-b pb-4">
       <img

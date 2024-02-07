@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import CartItems from "./CartItems";
 import type { Cart } from "@/app/global";
@@ -5,7 +6,7 @@ import { BiArrowBack } from "react-icons/bi";
 
 const CartTable = ({ cart }: { cart: Cart[] }) => {
 
-  if (!cart.length) return <p>No item in cart!</p>
+  if (!cart.length) return <p>No item in cart!</p>;
 
   return (
     <section
@@ -23,9 +24,7 @@ const CartTable = ({ cart }: { cart: Cart[] }) => {
           </Link>
         </header>
         <ul className="flex flex-col gap-8">
-          {cart.map((item) => (
-            <CartItems key={item.id} {...item} />
-          ))}
+         {cart.map((item)=> <CartItems key={item.id} {...item} />)}
         </ul>
       </div>
     </section>
