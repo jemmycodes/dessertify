@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 // eslint-disable
 
 import { cookies } from "next/headers";
@@ -6,6 +7,7 @@ import {
   createServerClient,
   type CookieOptions,
 } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
 export const createSupabaseServerClient = () => {
   const cookieStore = cookies();
@@ -19,12 +21,10 @@ export const createSupabaseServerClient = () => {
           return cookieStore.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          // eslint-disable-next-line
           cookieStore.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
-          // eslint-disable-next-line
-          cookieStore.set({ name, value: "", ...options }) as any;
+          cookieStore.set({ name, value: "", ...options }) 
         },
       },
     }
@@ -46,3 +46,54 @@ export const createSupabaseServerComponent = (
     }
   );
 };
+
+export const createMiddleWareServerClient = (request: NextRequest, response: NextResponse) => { 
+
+ 
+  
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        get(name: string) {
+          return request.cookies.get(name)?.value;
+        },
+        set(name: string, value: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value,
+            ...options,
+          });
+        },
+        remove(name: string, options: CookieOptions) {
+          request.cookies.set({
+            name,
+            value: "",
+            ...options,
+          });
+          response = NextResponse.next({
+            request: {
+              headers: request.headers,
+            },
+          });
+          response.cookies.set({
+            name,
+            value: "",
+            ...options,
+          });
+        },
+      },
+    }
+  );
+}

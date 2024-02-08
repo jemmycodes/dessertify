@@ -1,4 +1,4 @@
-import type { Cart } from "../global";
+import type { Cart } from "../../global";
 import Checkout from "../_components/cart/Checkout";
 import CartTable from "../_components/cart/CartTable";
 import { fetchDataInServerComponents } from "../_lib/supabase/server/databaseRequests";
@@ -13,7 +13,7 @@ const Cart = async () => {
     <>
       <CartTable cart={cart} />
 
-      <Checkout cartLength={cart.length} />
+      <Checkout cart={cart} />
     </>
   );
 };

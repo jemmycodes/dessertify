@@ -1,7 +1,8 @@
 import Image from "next/image";
+import type { ReactNode } from "react";         
 import dessertBg from "../../public/dessert-bg.jpeg";
 
-const AuthenticationLayout = ({ children }: Props) => {
+const AuthenticationLayout = ({ children }:{children: ReactNode}) => {
   return (
     <>
       <main className=" w-screen h-screen bg-auth-page-bg flex justify-center items-center">

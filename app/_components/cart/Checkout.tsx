@@ -1,14 +1,19 @@
-export const Checkout = ({ cartLength }: { cartLength: number }) => {
+import type { Cart } from "@/app/global";
+
+export const Checkout = ({ cart }: { cart: Cart[] }) => {
+const totalAmount = cart.reduce((accumulator, item)=> accumulator + (item.price * item.quantity), 0)
+
   return (
-    cartLength > 0 && (
+    cart.length > 0 && (
       <aside className="bg-white md:w-full md:max-w-lg h-full py-5 ">
         <h2 className="max-w-xs pb-4 mx-auto text-xl font-bold text-black border-b">
           Order Summary
         </h2>
         <div className="flex flex-col max-w-xs gap-4 py-4 mx-auto">
           <span className="flex justify-between">
-            <p className="text-sm font-bold">ITEMS {cartLength}</p>
-            <p className="font-bold">$500</p>
+            <p className="text-sm font-bold">ITEMS {cart.length}</p>
+            <p className="font-bold">
+              ${totalAmount}</p>
           </span>
           <div className="flex flex-col gap-4">
             <label className="text-sm font-bold">SHIPPING</label>

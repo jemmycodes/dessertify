@@ -1,5 +1,8 @@
-interface FormWrapperProps extends Props {
+import type { ReactNode } from "react";
+
+interface FormWrapperProps {
   heading: string;
+  children: ReactNode,
   onSubmitForm: () => unknown;
 }
 

@@ -2,10 +2,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import type { Message } from "./useSendToDb";
 import { createSupabaseBrowserClient } from "../supabase/client";
+import { action } from "../helpers/actions";
 
 const supabase = createSupabaseBrowserClient();
 
 const useRemoveRow = (table: string, id: number, message: Message) => {
+
   const [loading, setLoading] = useState(false);
 
   const removeRow = async () => {
@@ -19,8 +21,9 @@ const useRemoveRow = (table: string, id: number, message: Message) => {
     } catch (error) {
       console.log(error);
       toast.error(message.error, { id: toastID });
-    } finally {
+    } finally{
       setLoading(false);
+      action()
     }
   };
 

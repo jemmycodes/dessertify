@@ -1,5 +1,5 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { createMiddleWareServerClient } from "./app/_lib/supabase/server";
 
 export const config = {
   matcher: [
@@ -15,59 +15,35 @@ export const config = {
 };
 
 export async function middleware(request: NextRequest) {
-  let response = NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   });
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
-        },
-        set(name: string, value: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value,
-            ...options,
-          });
-        },
-        remove(name: string, options: CookieOptions) {
-          request.cookies.set({
-            name,
-            value: "",
-            ...options,
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            },
-          });
-          response.cookies.set({
-            name,
-            value: "",
-            ...options,
-          });
-        },
-      },
-    }
-  );
+  const pathname = request.nextUrl.pathname;
+  const supabase = createMiddleWareServerClient(request, response);
 
-  await supabase.auth.getUser();
+  // helper function to redirect users
+  const cloneUrlAndRedirect = (pathname: string) => {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname;
+    return Response.redirect(url);
+  };
+
+  const { data, error } = await supabase.auth.getUser();
+  
+  console.log(error);
+
+  if (pathname.includes("profile") && !data?.user)
+    return cloneUrlAndRedirect("auth/login");
+
+  if (pathname === "/auth" && !data?.user) return cloneUrlAndRedirect("auth/login");
+
+  if (pathname.includes("auth") && data?.user)
+    return cloneUrlAndRedirect("menu/all");
+
+  if (pathname === "/menu") return cloneUrlAndRedirect("menu/all");
 
   return response;
 }

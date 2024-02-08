@@ -28,11 +28,6 @@
       }
     ]
   },
-  "include": [
-    "app/global.d.ts",
-    "middleware.ts",
-    "app",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["global.d.ts", "middleware.ts", "app", ".next/types/**/*.ts"],
   "exclude": ["next", "public", "node_modules"]
 }

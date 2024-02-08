@@ -1,4 +1,5 @@
-import { createSupabaseServerClient } from "@/app/_lib/supabase/supabaseInstance";
+import { createSupabaseServerClient } from "@/app/_lib/supabase/server";
+
 
 export const GET = async () => {
   const supabase = createSupabaseServerClient();
@@ -11,7 +12,6 @@ export const GET = async () => {
     });
   }
 
-  console.log(data, error, "route handler");
 
   return Response.json(data, { status: 200, statusText: "OK!" });
 };
