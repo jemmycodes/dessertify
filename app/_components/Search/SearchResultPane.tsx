@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-interface SearchResultPaneProps extends Props {
+interface SearchResultPaneProps  {
   children: ReactNode;
   status: "loading" | "error" | "idle";
 }

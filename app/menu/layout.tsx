@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Search from "../_components/Search/Search";
 import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 import MenuNavigation from "../_components/customlayouts/MenuNavigation";
 
-const MenuLayout = ({ children }: Props) => {
+const MenuLayout = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState("");
 
   return (
