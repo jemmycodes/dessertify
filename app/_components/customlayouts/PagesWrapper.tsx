@@ -1,8 +1,8 @@
-import Navbar from "./Navbar";
 import Header from "./Header";
 import type { ReactNode } from "react";
+import Navbar from "./Navbar";
 
-const PagesWrapper = ({ children }: {children: ReactNode}) => {
+const PagesWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <div className="  bg-gray-100 md:grid  md:grid-cols-main-layout  min-h-screen ">
