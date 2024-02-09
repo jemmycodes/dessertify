@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignorePatterns: ["app/global.d.ts"],
   env: {
     browser: true,
     es6: true,

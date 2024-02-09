@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    "typeRoots": ["app/global.d.ts", "./node_modules/@types"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -28,6 +29,6 @@
       }
     ]
   },
-  "include": ["global.d.ts", "middleware.ts", "app", ".next/types/**/*.ts"],
-  "exclude": ["next", "public", "node_modules"]
+  "include": ["global.d.ts", "middleware.ts", "app", ".next/types/**/*.ts", "next-env.d.ts", "public/images.d.ts"],
+  "exclude": ["next", "node_modules"]
 }
