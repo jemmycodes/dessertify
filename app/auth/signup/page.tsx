@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { z } from "zod";
-import React from "react";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";

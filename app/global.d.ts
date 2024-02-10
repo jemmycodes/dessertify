@@ -9,7 +9,7 @@ import type { Tables } from "./_lib/types/supabase";
   }
 
   interface Result {
-    id: string;
+    id: string | number;
     name: string;
     category: string;
   }

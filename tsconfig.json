@@ -29,6 +29,14 @@
       }
     ]
   },
-  "include": ["global.d.ts", "middleware.ts", "app", ".next/types/**/*.ts", "next-env.d.ts", "public/images.d.ts"],
+  "include": [
+    "global.d.ts",
+    "middleware.ts",
+    "app",
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "public/images.d.ts",
+    ".eslintrc.js"
+  ],
   "exclude": ["next", "node_modules"]
 }
