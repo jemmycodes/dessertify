@@ -8,7 +8,7 @@ export async function GET(request: Request) {
 
   const { data, error } = await supabase
     .from("menu")
-    .select("name, category")
+    .select("name, category, id")
     .filter("name", "ilike", `%${query}%`);
 
   if (error) {

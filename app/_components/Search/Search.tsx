@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { FaSearch } from "react-icons/fa";
@@ -65,8 +67,8 @@ const Search = ({ smHidden, search, onSearch }: SearchProps) => {
         <SearchResultPane status={status}>
           {searchResults && searchResults.length ? (
             searchResults.map((result) => (
-              <SearchResult {...result} key={result.id} />
-            ))
+              <SearchResult {...result} key={result.id} />)
+            )
           ) : (
             <p>
               No result(s) found for

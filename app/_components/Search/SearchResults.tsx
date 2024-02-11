@@ -1,7 +1,7 @@
 import Link from "next/link";
-import type { Result } from "../../global";
+import type { Result } from "@/app/global";
 
-const SearchResult = ({ id, category, name }: Result) => {
+const SearchResult = ({id, name, category}: Result) => {
   return (
     <Link href={`/menu/${category}/dessert/${id}`}>
       <li className="hover:text-orange cursor-pointer ">

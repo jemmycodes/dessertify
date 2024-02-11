@@ -17,7 +17,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="-translate-x-1/2 fixed bottom-5 w-[90%] bg-white/20 backdrop-blur-[5px] shadow-lg rounded-full px-5 py-3  left-1/2  max-w-sm md:sticky md:h-screen md:-translate-x-0 md:left-0 md:bg-white md:w-full md:rounded-none md:flex md:flex-col md:justify-between md:top-0 ">
+    <nav className="-translate-x-1/2 fixed bottom-5 w-[90%] bg-white/20 backdrop-blur-[5px] shadow-lg rounded-full px-5 py-3  left-1/2  max-w-sm md:sticky md:h-screen md:-translate-x-0 md:left-0 md:bg-white md:w-full md:rounded-none md:flex md:flex-col md:justify-between md:top-0 z-50">
       <Link href="/" className="w-fit  hidden md:flex">
         <Image src={logo} height={70} width={70} alt="Logo" />
       </Link>
@@ -31,7 +31,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link
-            className={pathname.includes("/menu/all") ? "active-link" : "nav-link"}
+            className={
+              pathname.includes("/menu/all") ? "active-link" : "nav-link"
+            }
             href="/menu">
             <MdOutlineRestaurantMenu />
           </Link>
