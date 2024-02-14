@@ -7,6 +7,7 @@ const Profile = () => {
     <PagesWrapper>
       <ProfileHeader />
       <ProfileBio />
+      <p>Still in development</p>
     </PagesWrapper>
   );
 };

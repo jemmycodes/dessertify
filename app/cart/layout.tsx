@@ -4,7 +4,7 @@ import PagesWrapper from "../_components/customlayouts/PagesWrapper";
 const CartLayout = ({ children }: { children: ReactNode }) => {
   return (
     <PagesWrapper>
-      <main className="flex flex-col min-h-screen md:min-h-0 md:h-[85vh]  md:overflow-y-hidden md:flex-row ">
+      <main className="flex flex-col md:flex-row mb-24 md:mb-0">
         {children}
       </main>
     </PagesWrapper>
