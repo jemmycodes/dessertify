@@ -32,11 +32,7 @@ const useSendToDb = <T extends CartItem>(
       value: item.product_id,
     });
 
-    // const { data: cartItem, error }: Data = await supabase
-    //   .from(table)
-    //   .select("*")
-    //   .eq("product_id", item.product_id)
-    //   .maybeSingle();
+    console.log(error);
 
     if (error) return;
 

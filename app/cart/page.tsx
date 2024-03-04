@@ -30,8 +30,11 @@ const Cart = async () => {
         />
         <Link
           href="/menu/all"
-          className="px-5 py-1 border border-orange text-orange text-sm ">
-          Go to Shop <IoChevronForward />
+          className="px-5 py-2 border border-orange text-orange text-sm flex gap-3 items-center">
+            <p>
+           Go to Shop
+              </p>
+          <IoChevronForward />
         </Link>
       </div>
     );

@@ -1,6 +1,13 @@
 import { useMemo } from "react";
+import FlutterwavePayment from "./FlutterwavePayment";
 
-const CartSummary = ({ totalAmount , cartLength}: { totalAmount: number, cartLength: number }) => {
+const CartSummary = ({
+  totalAmount,
+  cartLength,
+}: {
+  totalAmount: number;
+  cartLength: number;
+}) => {
   const summary = useMemo(
     () => [
       {
@@ -41,9 +48,7 @@ const CartSummary = ({ totalAmount , cartLength}: { totalAmount: number, cartLen
         </div>
       ))}
 
-      <button className="text-white bg-orange px-4 py-2 text-sm">
-        Checkout
-      </button>
+      <FlutterwavePayment />
     </section>
   );
 };
