@@ -1,5 +1,5 @@
-import Header from "./Header";
 import Navbar from "./Navbar";
+import Header from "./Header";
 import type { ReactNode } from "react";
 
 const PagesWrapper = ({ children }: { children: ReactNode }) => {
